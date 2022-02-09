@@ -1,0 +1,33 @@
+---
+- name: Remove a file from current inventory
+  hosts: all
+  gather_facts: no
+  become: no
+
+
+  vars:
+    # These vars are used to purposefully skip a node
+    skip_host    : "{{ tower_skip_host    | default('no') }}"
+    host_to_skip : "{{ tower_host_to_skip | default('lab-dev-2') }}"
+
+
+  tasks:
+    - block:
+      - name: "Test #1a - Remove file from machine - skipping {{ host_to_skip }}"
+        file:
+          path  : /tmp/hello-ansible.txt
+          state : absent
+        when: inventory_hostname != host_to_skip
+      when:
+        - skip_host | bool
+
+
+    - name: "Test #1 - Remove file from machine"
+      file:
+        path  : /tmp/hello-ansible.txt
+        state : absent
+      when:
+        - not skip_host | bool
+
+
+...
