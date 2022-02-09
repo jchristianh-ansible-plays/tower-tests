@@ -44,6 +44,7 @@
               - "rc     : {{ r_check_file.rc }}"
               - "stdout : {{ r_check_file.stdout }}"
               - "stderr : {{ r_check_file.stderr }}"
+              - "msg    : {{ r_check_file.msg }}"
 
 
       always:
@@ -51,7 +52,7 @@
           debug:
             msg:
               - "host   : {{ inventory_hostname }}"
-              - "failed : {{ r_check_file.failed }} {{ r_check_file.msg | default('') }}"
+              - "failed : {{ r_check_file.failed }}"
 
 
 ...
