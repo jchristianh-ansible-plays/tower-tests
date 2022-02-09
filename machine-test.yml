@@ -1,0 +1,17 @@
+---
+- name: Tests machine connections via Ansible Tower/Ansible Automation Platform
+  hosts: all
+  gather_facts: no
+  become: no
+
+
+  tasks:
+    - name: "Test #1 - whoami"
+      command:
+        cmd: whoami
+      register: r_cmd_whoami
+
+
+    - name: "Results #1 - whoami"
+      debug:
+        var: r_cmd_whoami.stdout
