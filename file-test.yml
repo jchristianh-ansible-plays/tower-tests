@@ -8,10 +8,11 @@
   tasks:
   - name: Run file test
     block:
-      - name: "Test #3 - induce failure (but only for a specified host)"
-        command:
-          cmd: cat /tmp/hello-ansible.txt
-        register: r_check_file
+      - name: "Test #1: register file contents"
+        command      :
+          cmd        : cat /tmp/hello-ansible.txt
+        changed_when : no
+        register     : r_check_file
 
 
     rescue:
