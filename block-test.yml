@@ -1,0 +1,64 @@
+---
+- name: Tests machine connections via Ansible Tower/Ansible Automation Platform
+  hosts: all
+  gather_facts: no
+  become: no
+
+
+  vars:
+    induce_failure : "{{ tower_induce_failure | default('yes') }}"
+    host_to_fail   : "{{ tower_host_to_fail   | default('lab-prod-1') }}"
+
+
+  tasks:
+  - name: Run tests against various hosts
+    block:
+      - name: "Test #1 - whoami"
+        command:
+          cmd: whoami
+        register: r_cmd_whoami
+
+
+      - name: "Results #1 - whoami"
+        debug:
+          msg:
+            - "rc     : {{ r_cmd_whoami.rc }}"
+            - "stdout : {{ r_cmd_whoami.stdout }}"
+            - "stderr : {{ r_cmd_whoami.stderr }}"
+
+
+      - name: "Test #2 - uptime"
+        command:
+          cmd: uptime
+        register: r_cmd_uptime
+
+
+      - name: "Results #2 - uptime"
+        debug:
+          msg:
+            - "rc     : {{ r_cmd_uptime.rc }}"
+            - "stdout : {{ r_cmd_uptime.stdout }}"
+            - "stderr : {{ r_cmd_uptime.stderr }}"
+
+
+      - name: "Test #3 - induce failure (but only for a specified host)"
+        command:
+          cmd: /bin/false
+        when:
+          - inventory_hostname == host_to_fail
+          - induce_failure
+
+
+    rescue:
+      - name: Exception caught!
+        debug:
+          msg: "Fail condition for {{ inventory_hostname }}!"
+
+
+    always:
+      - name: Job complete
+        debug:
+          msg: "Job has completed."
+
+
+...
