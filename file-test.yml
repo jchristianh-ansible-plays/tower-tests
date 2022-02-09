@@ -15,7 +15,7 @@
 
 
     rescue:
-      - name: Exception caught!
+      - name: Exception caught
         debug:
           msg:
             - "host   : {{ inventory_hostname }}"
@@ -27,11 +27,7 @@
     always:
       - name: Job complete
         debug:
-          msg:
-            - "host   : {{ inventory_hostname }}"
-            - "rc     : {{ r_check_file.rc }}"
-            - "stdout : {{ r_check_file.stdout }}"
-            - "stderr : {{ r_check_file.stderr }}"
+          msg: "Job has completed."
 
 
 ...
