@@ -36,6 +36,11 @@
           register     : r_check_file
 
 
+        - name: "Test #2: do something else"
+          debug:
+            msg: Something, something, and something!
+
+
       rescue:
         - name: Exception caught
           debug:
