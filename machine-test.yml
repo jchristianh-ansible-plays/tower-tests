@@ -9,9 +9,10 @@
   - name: Run tests against various hosts
     block:
       - name: "Test #1 - whoami"
-        command  :
-          cmd    : whoami
-        register : r_cmd_whoami
+        command      :
+          cmd        : whoami
+        changed_when : no
+        register     : r_cmd_whoami
 
 
       - name: "Results #1 - whoami"
