@@ -5,28 +5,32 @@
   become: no
 
 
+  vars:
+    # These vars are used to purposefully skip a node
+    skip_host    : "{{ tower_skip_host    | default('no') }}"
+    host_to_skip : "{{ tower_host_to_skip | default('lab-dev-2') }}"
+
+
   tasks:
-  - name: Run tests against various hosts
-    block:
-      - name: "Test #1 - whoami"
-        command      :
-          cmd        : whoami
-        changed_when : no
-        register     : r_cmd_whoami
+    - name: "Test #1 - whoami"
+      command      :
+        cmd        : whoami
+      changed_when : no
+      register     : r_cmd_whoami
 
 
-      - name: "Results #1 - whoami"
-        debug:
-          msg:
-            - "rc     : {{ r_cmd_whoami.rc }}"
-            - "stdout : {{ r_cmd_whoami.stdout }}"
-            - "stderr : {{ r_cmd_whoami.stderr }}"
+    - name: "Results #1 - whoami"
+      debug:
+        msg:
+          - "rc     : {{ r_cmd_whoami.rc }}"
+          - "stdout : {{ r_cmd_whoami.stdout }}"
+          - "stderr : {{ r_cmd_whoami.stderr }}"
 
 
-      - name: "Test #2 - Copy file to machine"
-        copy:
-          src  : files/hello-ansible.txt
-          dest : /tmp/hello-ansible.txt
-
+    - name: "Test #2 - induce failure (but only for a specified host)"
+      command:
+        cmd: /bin/false
+      when:
+        - fail_host | bool and inventory_hostname == host_to_fail
 
 ...

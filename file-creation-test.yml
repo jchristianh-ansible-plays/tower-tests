@@ -1,0 +1,33 @@
+---
+- name: Create a test file on current inventory
+  hosts: all
+  gather_facts: no
+  become: no
+
+
+  vars:
+    # These vars are used to purposefully skip a node
+    skip_host    : "{{ tower_skip_host    | default('no') }}"
+    host_to_skip : "{{ tower_host_to_skip | default('lab-dev-2') }}"
+
+
+  tasks:
+    - block:
+      - name: "Test #1a - Copy file to machine - skipping {{ host_to_skip }}"
+        copy:
+          src  : files/hello-ansible.txt
+          dest : /tmp/hello-ansible.txt
+        when: inventory_hostname != host_to_skip
+      when:
+        - skip_host | bool
+
+
+    - name: "Test #1 - Copy file to machine"
+      copy:
+        src  : files/hello-ansible.txt
+        dest : /tmp/hello-ansible.txt
+      when:
+        - not skip_host | bool
+
+
+...

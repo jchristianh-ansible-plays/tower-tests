@@ -1,0 +1,59 @@
+---
+- name: Utilize workflow based on an in-memory inventory
+  hosts: localhost
+  gather_facts: no
+  become: no
+
+
+  vars:
+    provision_host: "{{ tower_provision_host | default('localhost') }}"
+
+
+  tasks:
+    - name: "Create in-memory inventory for {{ provision_host }}"
+      add_host:
+        name: "{{ provision_host }}"
+        groups:
+          - remdiation
+
+
+
+
+# =========================================================================== #
+
+
+- name: Verify file existance and handle errors if needed
+  hosts: remdiation
+  gather_facts: no
+  become: no
+
+
+  tasks:
+    - name: Run file test
+      block:
+        - name: "Test #1: register file contents"
+          command      :
+            cmd        : cat /tmp/hello-ansible.txt
+          changed_when : no
+          register     : r_check_file
+
+
+      rescue:
+        - name: Exception caught
+          debug:
+            msg:
+              - "host   : {{ inventory_hostname }}"
+              - "rc     : {{ r_check_file.rc }}"
+              - "stdout : {{ r_check_file.stdout }}"
+              - "stderr : {{ r_check_file.stderr }}"
+
+
+      always:
+        - name: Job complete
+          debug:
+            msg:
+              - "host   : {{ inventory_hostname }}"
+              - "failed : {{ r_check_file.failed }} {{ r_check_file.msg }}"
+
+
+...
