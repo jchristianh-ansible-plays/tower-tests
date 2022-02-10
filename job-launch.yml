@@ -1,0 +1,27 @@
+---
+- name: Utilize workflow based on an in-memory inventory
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+
+
+  collections:
+    - awx.awx
+    - redhat_cop.tower_configuration
+
+
+  vars:
+    provision_host: "{{ tower_provision_host | default('localhost') }}"
+
+
+  vars_files:
+    - vars/job_launch_templates.yml
+
+
+  tasks:
+    - include_role:
+        name: redhat_cop.tower_configuration.job_launch
+
+
+...
