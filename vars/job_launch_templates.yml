@@ -6,7 +6,7 @@ tower_launch_jobs:
     tower_username         : admin
     tower_password         : redhat
     tower_host             : https://tower2.thezengarden.net
-    validate_certs         : no
+    validate_certs         : False
 
 
 ...
