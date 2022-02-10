@@ -7,7 +7,7 @@
 
 
   vars_files:
-    - vars/job_launch_templates.yml
+    - vars/job_launch_inmem_test.yml
 
 
   tasks:
