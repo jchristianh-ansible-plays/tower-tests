@@ -1,5 +1,5 @@
 ---
-- name: Utilize workflow based on an in-memory inventory
+- name: Create inventory based on passed extra_vars
   hosts: localhost
   gather_facts: no
   become: no
@@ -20,7 +20,7 @@
 # =========================================================================== #
 
 
-- name: Verify file existance and handle errors if needed
+- name: Verify file existence and handle errors if needed
   hosts: remdiation
   gather_facts: no
   become: no
@@ -59,7 +59,7 @@
 
         - name: Re-create files as needed
           uri:
-            url              : "{{ tower_api_host }}/api/v2/job_templates/22/launch/"
+            url              : "{{ tower_api_host }}/api/v2/job_templates/27/launch/"
             method           : POST
             status_code      : 201
             force_basic_auth : yes
