@@ -56,19 +56,6 @@
               - "msg    : {{ r_check_file.msg }}"
 
 
-#        - name: Re-create files as needed
-#          uri:
-#            url              : "{{ tower_api_host }}/api/v2/job_templates/22/launch/"
-#            method           : POST
-#            status_code      : 201
-#            force_basic_auth : yes
-#            user             : "{{ tower_api_user }}"
-#            password         : "{{ tower_api_pass }}"
-#            body_format      : json
-#            body:
-#              trigger: me
-
-
         - name: Re-create files as needed
           uri:
             url              : "{{ tower_api_host }}/api/v2/job_templates/22/launch/"
