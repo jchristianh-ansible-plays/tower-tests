@@ -28,6 +28,7 @@
 
   vars_files:
     - vars/defaults.yml
+    - vars/job_launch_file_creation.yml
 
 
   tasks:
@@ -56,19 +57,8 @@
               - "msg    : {{ r_check_file.msg }}"
 
 
-        - name: Re-create files as needed
-          uri:
-            url              : "{{ tower_api_host }}/api/v2/job_templates/22/launch/"
-            method           : POST
-            status_code      : 201
-            force_basic_auth : yes
-            url_username     : "{{ tower_api_user }}"
-            url_password     : "{{ tower_api_pass }}"
-            body_format      : json
-            return_content   : no
-            validate_certs   : no
-            body:
-              trigger: me
+        - include_role:
+            name: redhat_cop.tower_configuration.job_launch
 
 
       always:

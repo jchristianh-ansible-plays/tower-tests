@@ -1,0 +1,12 @@
+---
+tower_launch_jobs:
+  - name: file_creation_test
+    extra_vars:
+      host   : "{{ inventory_hostname }}"
+      rc     : "{{ r_check_file.rc }}"
+      stdout : "{{ r_check_file.stdout }}"
+      stderr : "{{ r_check_file.stderr }}"
+      msg    : "{{ r_check_file.msg }}"
+
+
+...
