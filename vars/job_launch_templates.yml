@@ -5,6 +5,7 @@ tower_launch_jobs:
       tower_provision_host : "{{ provision_host }}"
     tower_username         : admin
     tower_password         : redhat
+    tower_host             : https://tower2.thezengarden.net
     validate_certs         : no
 
 
