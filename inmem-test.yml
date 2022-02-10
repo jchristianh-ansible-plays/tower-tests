@@ -50,11 +50,11 @@
         - name: Exception caught
           debug:
             msg:
-              - "host   : {{ inventory_hostname }}"
-              - "rc     : {{ r_check_file.rc }}"
-              - "stdout : {{ r_check_file.stdout }}"
-              - "stderr : {{ r_check_file.stderr }}"
-              - "msg    : {{ r_check_file.msg }}"
+              - "tower_provision_host   : {{ inventory_hostname }}"
+              - "tower_provision_rc     : {{ r_check_file.rc }}"
+              - "tower_provision_stdout : {{ r_check_file.stdout }}"
+              - "tower_provision_stderr : {{ r_check_file.stderr }}"
+              - "tower_provision_msg    : {{ r_check_file.msg }}"
 
 
         - name: Re-create files as needed
@@ -81,8 +81,8 @@
         - name: Job complete
           debug:
             msg:
-              - "host   : {{ inventory_hostname }}"
-              - "failed : {{ r_check_file.failed }}"
+              - "tower_provision_host   : {{ inventory_hostname }}"
+              - "tower_provision_failed : {{ r_check_file.failed }}"
 
 
 ...
