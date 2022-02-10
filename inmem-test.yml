@@ -26,6 +26,10 @@
   become: no
 
 
+  vars_files:
+    - vars/defaults.yml
+
+
   tasks:
     - name: Run file test
       block:
@@ -50,6 +54,34 @@
               - "stdout : {{ r_check_file.stdout }}"
               - "stderr : {{ r_check_file.stderr }}"
               - "msg    : {{ r_check_file.msg }}"
+
+
+#        - name: Re-create files as needed
+#          uri:
+#            url              : "{{ tower_api_host }}/api/v2/job_templates/22/launch/"
+#            method           : POST
+#            status_code      : 201
+#            force_basic_auth : yes
+#            user             : "{{ tower_api_user }}"
+#            password         : "{{ tower_api_pass }}"
+#            body_format      : json
+#            body:
+#              trigger: me
+
+
+        - name: Re-create files as needed
+          uri:
+            url              : "{{ tower_api_host }}/api/v2/job_templates/22/launch/"
+            method           : POST
+            status_code      : 201
+            force_basic_auth : yes
+            url_username     : "{{ tower_api_user }}"
+            url_password     : "{{ tower_api_pass }}"
+            body_format      : json
+            return_content   : no
+            validate_certs   : no
+            body:
+              trigger: me
 
 
       always:

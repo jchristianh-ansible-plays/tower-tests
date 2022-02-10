@@ -2,3 +2,4 @@
 collections:
   - name: redhat_cop.tower_configuration
   - name: awx.awx
+  - name: ansible.posix
