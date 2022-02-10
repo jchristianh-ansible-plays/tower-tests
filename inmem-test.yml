@@ -27,7 +27,6 @@
 
 
   vars_files:
-    - vars/defaults.yml
     - vars/job_launch_file_creation.yml
 
 
