@@ -1,3 +1,4 @@
 facts.d/*
 collections/ansible_collections
 venv/*
+builder

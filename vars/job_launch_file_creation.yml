@@ -1,7 +1,8 @@
 ---
 tower_launch_jobs:
   - name: file_creation_test
-    extra_vars:
+    job_template  : 27
+    extra_vars    :
       fail_host   : "{{ inventory_hostname }}"
       fail_rc     : "{{ r_check_file.rc }}"
       fail_stdout : "{{ r_check_file.stdout }}"

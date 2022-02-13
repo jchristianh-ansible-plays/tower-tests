@@ -59,7 +59,9 @@
 
         - name: Re-create files as needed
           uri:
-            url              : "{{ tower_api_host }}/api/v2/job_templates/27/launch/"
+            url              :
+              "{{ tower_api_host }}/api/v2/job_templates/\
+                {{ tower_launch_jobs[0].job_template }}/launch/"
             method           : POST
             status_code      : 201
             force_basic_auth : yes
