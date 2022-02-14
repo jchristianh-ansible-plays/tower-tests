@@ -28,7 +28,6 @@
 
   vars_files:
     - vars/defaults.yml
-    - vars/job_launch_file_creation.yml
 
 
   tasks:
@@ -57,11 +56,9 @@
               - "tower_provision_msg    : {{ r_check_file.msg }}"
 
 
-        - name: Re-create files as needed
+        - name: Execute recovery API callback
           uri:
-            url              :
-              "{{ tower_api_host }}/api/v2/job_templates/\
-                {{ tower_launch_jobs[0].job_template }}/launch/"
+            url              : "{{ recovery_callback_url }}"
             method           : POST
             status_code      : 201
             force_basic_auth : yes
