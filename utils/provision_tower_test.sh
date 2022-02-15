@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CONC="150"
-REQU="150"
+CONC="50"
+REQU="50"
 SLEEP_SECS="400"
 
 BASE_URL="tower2.thezengarden.net"
@@ -14,7 +14,7 @@ TOWER_PASS="redhat"
 
 
 printf "\n%s\n" \
-  "# Running test ${ITER}"
+  "# Running test - ${REQU} requests / ${CONC} concurrency"
   ab -c "${CONC}" \
   -n ${REQU} \
   -A ${TOWER_USER}:${TOWER_PASS} \
