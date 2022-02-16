@@ -2,6 +2,5 @@
 collections:
   - name: redhat_cop.tower_configuration
   - name: awx.awx
-    version: '>==17.0.0'
   - name: ansible.posix
   - name: community.general
