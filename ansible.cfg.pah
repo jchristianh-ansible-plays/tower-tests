@@ -1,0 +1,37 @@
+[defaults]
+inventory               = inventory/hosts
+roles_path              = roles
+collections_path        = collections
+remote_tmp              = /tmp/.ansible-${USER}/tmp
+gathering               = smart
+gather_timeout          = 30
+fact_path               = facts.d
+fact_caching            = jsonfile
+fact_caching_connection = facts.d
+fact_caching_timeout    = 300
+retry_files_enabled     = False
+forks                   = 40
+timeout                 = 30
+host_key_checking       = False
+display_skipped_hosts   = False
+interpreter_python      = auto_silent
+bin_ansible_callbacks   = True
+callback_whitelist      = ansible.posix.profile_tasks, ansible.posix.timer
+deprecation_warnings    = False
+command_warnings        = False
+
+
+[ssh_connection]
+pipelining = True
+ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o PreferredAuthentications=publickey
+
+[galaxy]
+server_list = community_repo,rh-certified_repo
+
+[galaxy_server.community_repo]
+url=https://<Private Automation Hub Host>/api/galaxy/content/community/
+token=<Token obtained from your Private Automation Hub>
+
+[galaxy_server.rh-certified_repo]
+url=https://<Private Automation Hub Host>/api/galaxy/content/rh-certified/
+token=<Token obtained from your Private Automation Hub>
