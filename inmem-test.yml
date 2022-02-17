@@ -10,10 +10,10 @@
 
 
   tasks:
-    - name: "Create in-memory inventory for {{ provision_host }}"
-      add_host:
-        name: "{{ provision_host }}"
-        groups:
+    - name     : "Create in-memory inventory for {{ provision_host }}"
+      add_host :
+        name   : "{{ provision_host }}"
+        groups :
           - remdiation
 
 
@@ -27,24 +27,24 @@
 
 
   tasks:
-    - name: Run file test
-      block:
-        - name: "Test #1: register file contents"
+    - name  : Run file test
+      block :
+        - name         : "Test #1: register file contents"
           command      :
             cmd        : cat /tmp/hello-ansible.txt
           changed_when : no
           register     : r_check_file
 
 
-        - name: "Test #2: do something else"
-          debug:
-            msg: Something, something, and something!
+        - name  : "Test #2: do something else"
+          debug :
+            msg : Something, something, and something!
 
 
       rescue:
-        - name: Exception caught
-          debug:
-            msg:
+        - name  : Exception caught
+          debug :
+            msg :
               - "tower_provision_host   : {{ inventory_hostname }}"
               - "tower_provision_rc     : {{ r_check_file.rc }}"
               - "tower_provision_stdout : {{ r_check_file.stdout }}"
@@ -63,15 +63,15 @@
             return_content   : no
             validate_certs   : no
             body:
-              id: 119
-              branch: main
-              commit_message: "{{ inventory_hostname }} - FAILED: {{ r_check_file.msg }}"
-              author_name: Chris Hammer
-              author_email: chris.hammer@redhat.com
+              id             : 119
+              branch         : main
+              commit_message : "{{ inventory_hostname }} - FAILED: {{ r_check_file.msg }}"
+              author_name    : Chris Hammer
+              author_email   : chris.hammer@redhat.com
               actions:
-              - action: create
-                file_path: "failed_jobs/{{ inventory_hostname }}_{{ ansible_date_time.iso8601 }}.txt"
-                content: |
+              - action    : create
+                file_path : "failed_jobs/{{ inventory_hostname }}_{{ ansible_date_time.iso8601 }}.txt"
+                content   : |
                   tower_provision_host   : {{ inventory_hostname }}
                   tower_provision_rc     : {{ r_check_file.rc }}
                   tower_provision_stdout : {{ r_check_file.stdout }}
@@ -80,9 +80,9 @@
 
 
       always:
-        - name: Job complete
-          debug:
-            msg:
+        - name  : Job complete
+          debug :
+            msg :
               - "tower_provision_host   : {{ inventory_hostname }}"
               - "tower_provision_failed : {{ r_check_file.failed }}"
 
