@@ -22,7 +22,7 @@
 
 - name: Verify file existence and handle errors if needed
   hosts: remdiation
-  gather_facts: no
+  gather_facts: yes
   become: no
 
 
@@ -70,7 +70,7 @@
               author_email: chris.hammer@redhat.com
               actions:
               - action: create
-                file_path: "failed_jobs/{{ inventory_hostname }}.txt"
+                file_path: "failed_jobs/{{ inventory_hostname }}_{{ ansible_date_time.iso8601 }}.txt"
                 content: |
                   tower_provision_host   : {{ inventory_hostname }}
                   tower_provision_rc     : {{ r_check_file.rc }}
