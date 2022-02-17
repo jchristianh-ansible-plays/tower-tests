@@ -26,10 +26,6 @@
   become: no
 
 
-  vars_files:
-    - vars/defaults.yml
-
-
   tasks:
     - name: Run file test
       block:
