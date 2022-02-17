@@ -58,22 +58,29 @@
 
         - name: Execute recovery API callback
           uri:
-            url              : "{{ recovery_callback_url }}"
+            url              : "https://git.thezengarden.net/api/v4/projects/119/repository/commits"
+            headers          :
+              PRIVATE-TOKEN  : "glpat-yb8XPJ8EJ7K5Cao9S8JE"
             method           : POST
             status_code      : 201
-            force_basic_auth : yes
-            url_username     : "{{ tower_api_user }}"
-            url_password     : "{{ tower_api_pass }}"
             body_format      : json
             return_content   : no
             validate_certs   : no
             body:
-              extra_vars:
-                tower_provision_host   : "{{ inventory_hostname }}"
-                tower_provision_rc     : "{{ r_check_file.rc }}"
-                tower_provision_stdout : "{{ r_check_file.stdout }}"
-                tower_provision_stderr : "{{ r_check_file.stderr }}"
-                tower_provision_msg    : "{{ r_check_file.msg }}"
+              id: 119
+              branch: main
+              commit_message: "{{ inventory_hostname }} - FAILED: {{ r_check_file.msg }}"
+              author_name: Chris Hammer
+              author_email: chris.hammer@redhat.com
+              actions:
+              - action: create
+                file_path: "failed_jobs/{{ inventory_hostname }}.txt"
+                content: |
+                  tower_provision_host   : {{ inventory_hostname }}
+                  tower_provision_rc     : {{ r_check_file.rc }}
+                  tower_provision_stdout : {{ r_check_file.stdout }}
+                  tower_provision_stderr : {{ r_check_file.stderr }}
+                  tower_provision_msg    : {{ r_check_file.msg }}
 
 
       always:
