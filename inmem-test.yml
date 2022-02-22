@@ -26,6 +26,10 @@
   become: no
 
 
+  vars_files:
+    - vars/file_creation_test.yml
+
+
   tasks:
     - name  : Run file test
       block :
@@ -50,6 +54,10 @@
               - "tower_provision_stdout : {{ r_check_file.stdout }}"
               - "tower_provision_stderr : {{ r_check_file.stderr }}"
               - "tower_provision_msg    : {{ r_check_file.msg }}"
+
+
+        - include_role:
+            name: redhat_cop.tower_configuration.job_launch
 
 
         - name: Execute recovery API callback
