@@ -1,13 +1,6 @@
 ---
 collections:
   - name: redhat_cop.tower_configuration
-    source: https://conjur.thezengarden.net
-
   - name: awx.awx
-    source: https://conjur.thezengarden.net
-
   - name: ansible.posix
-    source: https://conjur.thezengarden.net
-
   - name: community.general
-    source: https://conjur.thezengarden.net
