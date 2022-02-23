@@ -68,8 +68,8 @@
               id             : 119
               branch         : main
               commit_message : "{{ inventory_hostname }} - SUCCESS: {{ r_check_file.stdout }}"
-              author_name    : Chris Hammer
-              author_email   : chris.hammer@redhat.com
+              author_name    : "Ansible Deploy - Test"
+              author_email   : naye.jokopuwo@thezengarden.net
               actions:
               - action    : create
                 file_path : "successful_jobs/{{ inventory_hostname }}_{{ ansible_date_time.iso8601 }}.txt"
@@ -115,8 +115,8 @@
               id             : 119
               branch         : main
               commit_message : "{{ inventory_hostname }} - FAILED: {{ r_check_file.msg }}"
-              author_name    : Chris Hammer
-              author_email   : chris.hammer@redhat.com
+              author_name    : "Ansible Deploy - Test"
+              author_email   : naye.jokopuwo@thezengarden.net
               actions:
               - action    : create
                 file_path : "failed_jobs/{{ inventory_hostname }}_{{ ansible_date_time.iso8601 }}.txt"
