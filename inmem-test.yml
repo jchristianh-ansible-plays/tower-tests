@@ -38,12 +38,7 @@
           register     : r_check_file
 
 
-        - name  : "Test #2: do something else"
-          debug :
-            msg : Something, something, and something!
-
-
-        - name: "Test #3: Launch the `file_removal_test` job template"
+        - name: "Test #2: Launch the `file_removal_test` job template"
           no_log : yes
           uri    :
             url              : "https://tower2.thezengarden.net/api/v2/job_templates/23/launch/"
@@ -58,6 +53,32 @@
                 tower_provision_host": "{{ inventory_hostname }}"
 
 
+        - name: Return job data to originating source
+          no_log : yes
+          uri:
+            url              : "https://git.thezengarden.net/api/v4/projects/119/repository/commits"
+            headers          :
+              PRIVATE-TOKEN  : "glpat-DnEVHEjjS_q2_GhyngQV"
+            method           : POST
+            status_code      : 201
+            body_format      : json
+            return_content   : no
+            validate_certs   : no
+            body:
+              id             : 119
+              branch         : main
+              commit_message : "{{ inventory_hostname }} - SUCCESS: {{ r_check_file.stdout }}"
+              author_name    : Chris Hammer
+              author_email   : chris.hammer@redhat.com
+              actions:
+              - action    : create
+                file_path : "successful_jobs/{{ inventory_hostname }}_{{ ansible_date_time.iso8601 }}.txt"
+                content   : |
+                  tower_provision_host   : {{ inventory_hostname }}
+                  tower_provision_rc     : {{ r_check_file.rc }}
+                  tower_provision_stdout : {{ r_check_file.stdout }}
+
+
       rescue:
         - name  : Exception caught
           debug :
@@ -65,6 +86,7 @@
 
 
         - name: "Create missing file"
+          no_log : yes
           uri:
             url              : "https://tower2.thezengarden.net/api/v2/job_templates/22/launch/"
             force_basic_auth : yes
@@ -79,6 +101,7 @@
 
 
         - name: Return job data to originating source
+          no_log : yes
           uri:
             url              : "https://git.thezengarden.net/api/v4/projects/119/repository/commits"
             headers          :
