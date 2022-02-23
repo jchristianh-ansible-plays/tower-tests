@@ -1,8 +1,0 @@
----
-tower_launch_jobs:
-  - name: file_creation_test
-    extra_vars:
-      tower_provision_host : "{{ tower_provision_host | default('localhost') }}"
-
-
-...

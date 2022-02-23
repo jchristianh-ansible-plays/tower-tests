@@ -26,10 +26,6 @@
   become: no
 
 
-  vars_files:
-    - vars/file_creation_test.yml
-
-
   tasks:
     - name  : Run file test
       block :
@@ -45,22 +41,41 @@
             msg : Something, something, and something!
 
 
+        - name: "Test #3: Launch the `file_removal_test` job template"
+          uri:
+            url              : "https://tower2.thezengarden.net/api/v2/job_templates/23/launch/"
+            force_basic_auth : yes
+            user             : admin
+            password         : redhat
+            body_format      : json
+            method           : POST
+            status_code      : 201
+            body:
+              extra_vars:
+                tower_provision_host": "{{ inventory_hostname }}"
+
+
       rescue:
         - name  : Exception caught
           debug :
-            msg :
-              - "tower_provision_host   : {{ inventory_hostname }}"
-              - "tower_provision_rc     : {{ r_check_file.rc }}"
-              - "tower_provision_stdout : {{ r_check_file.stdout }}"
-              - "tower_provision_stderr : {{ r_check_file.stderr }}"
-              - "tower_provision_msg    : {{ r_check_file.msg }}"
+            msg : "*** EXCEPTION CAUGHT; RUNNING RESCUE TASKS ***"
 
 
-        - include_role:
-            name: redhat_cop.tower_configuration.job_launch
+        - name: "Create missing file"
+          uri:
+            url              : "https://tower2.thezengarden.net/api/v2/job_templates/22/launch/"
+            force_basic_auth : yes
+            user             : admin
+            password         : redhat
+            body_format      : json
+            method           : POST
+            status_code      : 201
+            body:
+              extra_vars:
+                tower_provision_host": "{{ inventory_hostname }}"
 
 
-        - name: Execute recovery API callback
+        - name: Return job data to originating source
           uri:
             url              : "https://git.thezengarden.net/api/v4/projects/119/repository/commits"
             headers          :
