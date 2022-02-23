@@ -97,7 +97,7 @@
             status_code      : 201
             body:
               extra_vars:
-                tower_provision_host": "{{ inventory_hostname }}"
+                tower_provision_host: "{{ inventory_hostname }}"
 
 
         - name: Return job data to originating source
