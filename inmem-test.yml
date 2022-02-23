@@ -85,10 +85,10 @@
             msg : "*** EXCEPTION CAUGHT; RUNNING RESCUE TASKS ***"
 
 
-        - name: "Create missing file"
+        - name: "Create missing file on {{ inventory_hostname }}"
           no_log : yes
           uri:
-            url              : "https://tower2.thezengarden.net/api/v2/job_templates/22/launch/"
+            url              : "https://tower2.thezengarden.net/api/v2/job_templates/27/launch/"
             force_basic_auth : yes
             user             : admin
             password         : redhat
