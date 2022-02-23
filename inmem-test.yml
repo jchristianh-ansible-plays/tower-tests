@@ -6,7 +6,9 @@
 
 
   vars:
-    provision_host: "{{ tower_provision_host | default('localhost') }}"
+    provision_host: "{{ tower_webhook_payload.commits.modified[0] \
+                        | default(tower_provision_host) \
+                        | default('localhost') }}"
 
 
   tasks:
@@ -42,7 +44,8 @@
 
 
         - name: "Test #3: Launch the `file_removal_test` job template"
-          uri:
+          no_log : yes
+          uri    :
             url              : "https://tower2.thezengarden.net/api/v2/job_templates/23/launch/"
             force_basic_auth : yes
             user             : admin
@@ -79,7 +82,7 @@
           uri:
             url              : "https://git.thezengarden.net/api/v4/projects/119/repository/commits"
             headers          :
-              PRIVATE-TOKEN  : "glpat-yb8XPJ8EJ7K5Cao9S8JE"
+              PRIVATE-TOKEN  : "glpat-DnEVHEjjS_q2_GhyngQV"
             method           : POST
             status_code      : 201
             body_format      : json
