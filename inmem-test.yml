@@ -72,12 +72,12 @@
             body:
               id             : "{{ gitlab_proj_id }}"
               branch         : "{{ git_commit_branch }}"
-              commit_message : "{{ lookup('env', 'JOB_ID') | default('N/A', true) }} - {{ inventory_hostname }}; SUCCESS: {{ r_check_file.stdout }}"
+              commit_message : "Job {{ lookup('env', 'JOB_ID') | default('N/A', true) }} - {{ inventory_hostname }}; SUCCESS: {{ r_check_file.stdout }}"
               author_name    : "{{ git_commit_author }}"
               author_email   : "{{ git_commit_email }}"
               actions:
               - action    : create
-                file_path : "successful_jobs/Job {{ lookup('env', 'JOB_ID') }}_\
+                file_path : "successful_jobs/{{ lookup('env', 'JOB_ID') }}_\
                               {{ inventory_hostname }}_\
                               {{ ansible_date_time.iso8601 }}.txt"
                 content   : |
@@ -131,12 +131,12 @@
             body:
               id             : "{{ gitlab_proj_id }}"
               branch         : "{{ git_commit_branch }}"
-              commit_message : "{{ lookup('env', 'JOB_ID') | default('N/A', true) }} - {{ inventory_hostname }}; FAILED: {{ r_check_file.msg }}"
+              commit_message : "Job {{ lookup('env', 'JOB_ID') | default('N/A', true) }} - {{ inventory_hostname }}; FAILED: {{ r_check_file.msg }}"
               author_name    : "{{ git_commit_author }}"
               author_email   : "{{ git_commit_email }}"
               actions:
               - action    : create
-                file_path : "failed_jobs/Job {{ lookup('env', 'JOB_ID') }}_\
+                file_path : "failed_jobs/{{ lookup('env', 'JOB_ID') }}_\
                               {{ inventory_hostname }}_\
                               {{ ansible_date_time.iso8601 }}.txt"
                 content   : |
