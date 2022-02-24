@@ -6,8 +6,7 @@
 
 
   vars:
-    provision_host: "{{ tower_webhook_payload.commits.modified[0] \
-                        | default(tower_provision_host) \
+    provision_host: "{{ default(tower_provision_host) \
                         | default('localhost') }}"
 
 
@@ -28,12 +27,19 @@
   become: no
 
 
+  vars_files:
+    - vars/defaults.yml
+
+
   tasks:
     - name  : Run file test
+      ###############
+      # BLOCK TASKS #
+      ###############
       block :
         - name         : "Test #1: register file contents"
           command      :
-            cmd        : cat /tmp/hello-ansible.txt
+            cmd        : "cat {{ check_file }}"
           changed_when : no
           register     : r_check_file
 
@@ -41,7 +47,7 @@
         - name: "Test #2: Launch the `file_removal_test` job template"
           no_log : yes
           uri    :
-            url              : "https://tower2.thezengarden.net/api/v2/job_templates/23/launch/"
+            url              : "{{ tower_file_remove_url }}"
             force_basic_auth : yes
             user             : admin
             password         : redhat
@@ -56,29 +62,38 @@
         - name: Return job data to originating source
           no_log : yes
           uri:
-            url              : "https://git.thezengarden.net/api/v4/projects/119/repository/commits"
+            url              : "{{ gitlab_commit_url }}"
             headers          :
-              PRIVATE-TOKEN  : "glpat-DnEVHEjjS_q2_GhyngQV"
+              PRIVATE-TOKEN  : "{{ gitlab_pat }}"
             method           : POST
             status_code      : 201
             body_format      : json
             return_content   : no
             validate_certs   : no
             body:
-              id             : 119
-              branch         : main
+              id             : "{{ gitlab_proj_id }}"
+              branch         : "{{ git_commit_branch }}"
               commit_message : "{{ inventory_hostname }} - SUCCESS: {{ r_check_file.stdout }}"
-              author_name    : "Ansible Deploy - Test"
-              author_email   : naye.jokopuwo@thezengarden.net
+              author_name    : "{{ git_commit_author }}"
+              author_email   : "{{ git_commit_email }}"
               actions:
               - action    : create
-                file_path : "successful_jobs/{{ inventory_hostname }}_{{ ansible_date_time.iso8601 }}.txt"
+                file_path : "successful_jobs/{{ inventory_hostname }}_\
+                              {{ ansible_date_time.iso8601 }}.txt"
                 content   : |
                   tower_provision_host   : {{ inventory_hostname }}
                   tower_provision_rc     : {{ r_check_file.rc }}
                   tower_provision_stdout : {{ r_check_file.stdout }}
 
 
+      ###################
+      # END BLOCK TASKS #
+      ###################
+
+
+      ################
+      # RESCUE TASKS #
+      ################
       rescue:
         - name  : Exception caught
           debug :
@@ -88,7 +103,7 @@
         - name: "Create missing file on {{ inventory_hostname }}"
           no_log : yes
           uri:
-            url              : "https://tower2.thezengarden.net/api/v2/job_templates/27/launch/"
+            url              : "{{ tower_file_creation_url }}"
             force_basic_auth : yes
             user             : admin
             password         : redhat
@@ -103,23 +118,24 @@
         - name: Return job data to originating source
           no_log : yes
           uri:
-            url              : "https://git.thezengarden.net/api/v4/projects/119/repository/commits"
+            url              : "{{ gitlab_commit_url }}"
             headers          :
-              PRIVATE-TOKEN  : "glpat-DnEVHEjjS_q2_GhyngQV"
+              PRIVATE-TOKEN  : "{{ gitlab_pat }}"
             method           : POST
             status_code      : 201
             body_format      : json
             return_content   : no
             validate_certs   : no
             body:
-              id             : 119
-              branch         : main
+              id             : "{{ gitlab_proj_id }}"
+              branch         : "{{ git_commit_branch }}"
               commit_message : "{{ inventory_hostname }} - FAILED: {{ r_check_file.msg }}"
-              author_name    : "Ansible Deploy - Test"
-              author_email   : naye.jokopuwo@thezengarden.net
+              author_name    : "{{ git_commit_author }}"
+              author_email   : "{{ git_commit_email }}"
               actions:
               - action    : create
-                file_path : "failed_jobs/{{ inventory_hostname }}_{{ ansible_date_time.iso8601 }}.txt"
+                file_path : "failed_jobs/{{ inventory_hostname }}_\
+                              {{ ansible_date_time.iso8601 }}.txt"
                 content   : |
                   tower_provision_host   : {{ inventory_hostname }}
                   tower_provision_rc     : {{ r_check_file.rc }}
@@ -128,12 +144,26 @@
                   tower_provision_msg    : {{ r_check_file.msg }}
 
 
+      ####################
+      # END RESCUE TASKS #
+      ####################
+
+
+      ################
+      # ALWAYS TASKS #
+      ################
+
       always:
         - name  : Job complete
           debug :
             msg :
               - "tower_provision_host   : {{ inventory_hostname }}"
               - "tower_provision_failed : {{ r_check_file.failed }}"
+
+
+      ####################
+      # END ALWAYS TASKS #
+      ####################
 
 
 ...

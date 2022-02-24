@@ -26,11 +26,15 @@
   become: no
 
 
+  vars_files:
+    - vars/defaults.yml
+
+
   tasks:
     - name: "Test #1 - Copy file to machine"
       copy:
         src  : files/hello-ansible.txt
-        dest : /tmp/hello-ansible.txt
+        dest : "{{ check_file }}"
 
 
 ...

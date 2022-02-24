@@ -5,6 +5,10 @@
   become: no
 
 
+  vars_files:
+    - vars/defaults.yml
+
+
   vars:
     # These vars are used to purposefully skip a node
     skip_host    : "{{ tower_skip_host    | default('no') }}"
@@ -16,7 +20,7 @@
       - name: "Test #1a - Copy file to machine - skipping {{ host_to_skip }}"
         copy:
           src  : files/hello-ansible.txt
-          dest : /tmp/hello-ansible.txt
+          dest : "{{ check_file }}"
         when: inventory_hostname != host_to_skip
       when:
         - skip_host | bool
@@ -25,7 +29,7 @@
     - name: "Test #1 - Copy file to machine"
       copy:
         src  : files/hello-ansible.txt
-        dest : /tmp/hello-ansible.txt
+        dest : "{{ check_file }}"
       when:
         - not skip_host | bool
 

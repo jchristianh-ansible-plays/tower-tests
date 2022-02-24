@@ -26,10 +26,14 @@
   become: no
 
 
+  vars_files:
+    - vars/defaults.yml
+
+
   tasks:
       - name: "Remove file from {{ inventory_hostname }}"
         file:
-          path  : /tmp/hello-ansible.txt
+          path  : "{{ check_file }}"
           state : absent
 
 

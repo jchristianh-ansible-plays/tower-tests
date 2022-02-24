@@ -5,12 +5,16 @@
   become: no
 
 
+  vars_files:
+    - vars/defaults.yml
+
+
   tasks:
   - name: Run file test
     block:
       - name: "Test #1: register file contents"
         command      :
-          cmd        : cat /tmp/hello-ansible.txt
+          cmd        : "cat {{ check_file }}"
         changed_when : no
         register     : r_check_file
 
