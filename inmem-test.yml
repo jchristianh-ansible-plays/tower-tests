@@ -99,11 +99,6 @@
             msg : "*** EXCEPTION CAUGHT; RUNNING RESCUE TASKS ***"
 
 
-        - name: debug tower_file_creation_url
-          debug:
-            var: tower_file_creation_url
-
-
         - name: "Create missing file on {{ inventory_hostname }}"
           #no_log : yes
           uri:
