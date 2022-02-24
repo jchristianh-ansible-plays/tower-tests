@@ -77,7 +77,7 @@
               author_email   : "{{ git_commit_email }}"
               actions:
               - action    : create
-                file_path : "successful_jobs/{{ lookup('env', 'JOB_ID') }}_\
+                file_path : "successful_jobs/Job {{ lookup('env', 'JOB_ID') }}_\
                               {{ inventory_hostname }}_\
                               {{ ansible_date_time.iso8601 }}.txt"
                 content   : |
@@ -136,7 +136,7 @@
               author_email   : "{{ git_commit_email }}"
               actions:
               - action    : create
-                file_path : "failed_jobs/{{ lookup('env', 'JOB_ID') }}_\
+                file_path : "failed_jobs/Job {{ lookup('env', 'JOB_ID') }}_\
                               {{ inventory_hostname }}_\
                               {{ ansible_date_time.iso8601 }}.txt"
                 content   : |
