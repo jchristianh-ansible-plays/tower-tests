@@ -43,13 +43,13 @@
           register     : r_check_file
 
 
-        - name: "Test #2: Launch the `file_removal_test` job template"
+        - name   : "Test #2: Launch the `file_removal_test` job template"
           no_log : yes
           uri    :
             url              : "{{ tower_file_remove_url }}"
             force_basic_auth : yes
-            user             : admin
-            password         : redhat
+            user             : "{{ tower_user }}"
+            password         : "{{ tower_password }}"
             body_format      : json
             method           : POST
             status_code      : 201
@@ -58,9 +58,9 @@
                 tower_provision_host: "{{ inventory_hostname }}"
 
 
-        - name: Return job data to originating source
+        - name   : Return job data to originating source
           no_log : yes
-          uri:
+          uri    :
             url              : "{{ gitlab_commit_url }}"
             headers          :
               PRIVATE-TOKEN  : "{{ gitlab_pat }}"
@@ -99,13 +99,18 @@
             msg : "*** EXCEPTION CAUGHT; RUNNING RESCUE TASKS ***"
 
 
+        - name: debug tower_file_creation_url
+          debug:
+            var: tower_file_creation_url
+
+
         - name: "Create missing file on {{ inventory_hostname }}"
-          no_log : yes
+          #no_log : yes
           uri:
             url              : "{{ tower_file_creation_url }}"
             force_basic_auth : yes
-            user             : admin
-            password         : redhat
+            user             : "{{ tower_user }}"
+            password         : "{{ tower_password }}"
             body_format      : json
             method           : POST
             status_code      : 201
