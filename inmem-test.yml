@@ -59,7 +59,7 @@
 
 
         - name   : Return job data to originating source
-          no_log : yes
+          no_log : no
           uri    :
             url              : "{{ gitlab_commit_url }}"
             headers          :
@@ -72,22 +72,20 @@
             body:
               id             : "{{ gitlab_proj_id }}"
               branch         : "{{ git_commit_branch }}"
-              commit_message : "{{ inventory_hostname }} - SUCCESS: {{ r_check_file.stdout }}"
+              commit_message : "{{ lookup('env', 'JOB_ID') | default('N/A', true) }} - {{ inventory_hostname }}; SUCCESS: {{ r_check_file.stdout }}"
               author_name    : "{{ git_commit_author }}"
               author_email   : "{{ git_commit_email }}"
               actions:
               - action    : create
-                file_path : "successful_jobs/{{ tower_job_id }}_\
-                              {{ tower_job_template_name }}_\
+                file_path : "successful_jobs/{{ lookup('env', 'JOB_ID') }}_\
+                              {{ inventory_hostname }}_\
                               {{ ansible_date_time.iso8601 }}.txt"
                 content   : |
-                  tower_user_name        : {{ tower_user_name }}
-                  tower_job_id           : {{ tower_job_id }}
-                  tower_launch_type      : {{ tower_launch_type }}
-                  tower_project_revision : {{ tower_project_revision }}
                   tower_provision_host   : {{ inventory_hostname }}
-                  tower_provision_rc     : {{ r_check_file.rc }}
-                  tower_provision_stdout : {{ r_check_file.stdout }}
+                  tower_job_id           : {{ lookup('env', 'JOB_ID')           | default('N/A', true) }}
+                  tower_project_revision : {{ lookup('env', 'PROJECT_REVISION') | default('N/A', true) }}
+                  tower_provision_rc     : {{ r_check_file.rc                   | default('N/A', true) }}
+                  tower_provision_stdout : {{ r_check_file.stdout               | default('N/A', true) }}
 
 
       ###################
@@ -120,7 +118,7 @@
 
 
         - name: Return job data to originating source
-          no_log : yes
+          no_log : no
           uri:
             url              : "{{ gitlab_commit_url }}"
             headers          :
@@ -133,24 +131,22 @@
             body:
               id             : "{{ gitlab_proj_id }}"
               branch         : "{{ git_commit_branch }}"
-              commit_message : "{{ inventory_hostname }} - FAILED: {{ r_check_file.msg }}"
+              commit_message : "{{ lookup('env', 'JOB_ID') | default('N/A', true) }} - {{ inventory_hostname }}; FAILED: {{ r_check_file.msg }}"
               author_name    : "{{ git_commit_author }}"
               author_email   : "{{ git_commit_email }}"
               actions:
               - action    : create
-                file_path : "failed_jobs/{{ tower_job_id }}_\
-                              {{ tower_job_template_name }}_\
+                file_path : "failed_jobs/{{ lookup('env', 'JOB_ID') }}_\
+                              {{ inventory_hostname }}_\
                               {{ ansible_date_time.iso8601 }}.txt"
                 content   : |
-                  tower_user_name        : {{ tower_user_name }}
-                  tower_job_id           : {{ tower_job_id }}
-                  tower_launch_type      : {{ tower_launch_type }}
-                  tower_project_revision : {{ tower_project_revision }}
                   tower_provision_host   : {{ inventory_hostname }}
-                  tower_provision_rc     : {{ r_check_file.rc }}
-                  tower_provision_stdout : {{ r_check_file.stdout }}
-                  tower_provision_stderr : {{ r_check_file.stderr }}
-                  tower_provision_msg    : {{ r_check_file.msg }}
+                  tower_job_id           : {{ lookup('env', 'JOB_ID')           | default('N/A', true) }}
+                  tower_project_revision : {{ lookup('env', 'PROJECT_REVISION') | default('N/A', true) }}
+                  tower_provision_rc     : {{ r_check_file.rc                   | default('N/A', true) }}
+                  tower_provision_stdout : {{ r_check_file.stdout               | default('N/A', true) }}
+                  tower_provision_stderr : {{ r_check_file.stderr               | default('N/A', true) }}
+                  tower_provision_msg    : {{ r_check_file.msg                  | default('N/A', true) }}
 
 
       ####################
