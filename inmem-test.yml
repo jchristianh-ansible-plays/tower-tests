@@ -6,8 +6,7 @@
 
 
   vars:
-    provision_host: "{{ default(tower_provision_host) \
-                        | default('localhost') }}"
+    provision_host: "{{ default(tower_provision_host) | default('localhost') }}"
 
 
   tasks:
