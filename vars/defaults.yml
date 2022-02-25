@@ -5,8 +5,8 @@ check_file: /tmp/hello-ansible.txt
 tower_url                    : 'https://tower2.thezengarden.net'
 tower_user                   : admin
 tower_password               : redhat
-tower_file_removal_template  : 23
-tower_file_creation_template : 27
+tower_file_removal_template  : 13
+tower_file_creation_template : 12
 tower_file_remove_url        : "{{ tower_url }}/api/v2/job_templates/\
                                 {{ tower_file_removal_template }}/launch/"
 tower_file_creation_url      : "{{ tower_url }}/api/v2/job_templates/\
