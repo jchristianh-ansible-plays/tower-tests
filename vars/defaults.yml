@@ -15,7 +15,7 @@ tower_file_creation_url      : "{{ tower_url }}/api/v2/job_templates/\
 
 gitlab_url        : 'https://git.thezengarden.net'
 gitlab_proj_id    : 119
-gitlab_pat        : "glpat-DnEVHEjjS_q2_GhyngQV"
+gitlab_pat        : "glpat-CyjgoyCBexN-gYrhpg6-"
 gitlab_commit_url : "{{ gitlab_url }}/api/v4/projects/{{ gitlab_proj_id }}\
                       /repository/commits"
 
