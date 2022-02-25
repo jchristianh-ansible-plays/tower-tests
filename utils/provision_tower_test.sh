@@ -1,11 +1,11 @@
 #!/bin/bash
 
-CONC="50"
-REQU="50"
+CONC="100"
+REQU="100"
 SLEEP_SECS="400"
 
 BASE_URL="tower2.thezengarden.net"
-AAP_JOB_ID="26"
+AAP_JOB_ID="9"
 POST_PAYLOAD_PATH="provision.post"
 POST_PAYLOAD_TYPE="application/json"
 
