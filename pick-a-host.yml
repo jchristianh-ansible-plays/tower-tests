@@ -1,0 +1,24 @@
+---
+- name: get random host to run on
+  hosts: all
+  connection: local
+  gather_facts: no
+  become: no
+
+
+  tasks:
+    - name: Show Ansible play hosts
+      debug:
+        var: play_hosts
+      run_once    : yes
+      delegate_to : localhost
+
+
+    - name: Pick a random host
+      debug:
+        msg: "ansible-playbook job-launch.yml -u root -e tower_provision_host={{ play_hosts | random }}"
+      run_once    : yes
+      delegate_to : localhost
+
+
+...

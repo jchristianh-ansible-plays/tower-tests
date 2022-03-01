@@ -1,8 +1,15 @@
 ---
+tower_lab_hosts:
+  - lab-dev-1
+  - lab-dev-2
+  - lab-prod-1
+  - lab-prod-2
+
+
 tower_launch_jobs:
   - name: inmem_test
     extra_vars:
-      tower_provision_host : "{{ tower_provision_host | default('localhost') }}"
+      tower_provision_host : "{{ tower_provision_host | default(tower_lab_hosts | random) }}"
 
 
 ...
