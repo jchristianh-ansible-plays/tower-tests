@@ -6,7 +6,7 @@ SLEEP_SECS="400"
 
 BASE_URL="tower2.thezengarden.net"
 AAP_JOB_ID="26"
-POST_PAYLOAD_PATH="test.post"
+POST_PAYLOAD_PATH="empty.post"
 POST_PAYLOAD_TYPE="application/json"
 
 TOWER_USER="admin"

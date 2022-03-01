@@ -1,11 +1,12 @@
 #!/bin/bash
 
-CONC="200"
-REQU="200"
+CONC="20"
+REQU="20"
 
 BASE_URL="tower2.thezengarden.net"
 AAP_JOB_ID="9"
-POST_PAYLOAD_PATH="provision.post"
+POST_PAYLOAD_PATH="empty.post"
+#POST_PAYLOAD_PATH="provision.post"
 POST_PAYLOAD_TYPE="application/json"
 
 TOWER_USER="admin"
