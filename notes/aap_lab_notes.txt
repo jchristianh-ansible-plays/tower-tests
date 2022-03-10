@@ -1,0 +1,161 @@
+-------------------------------------------------------------------------------
+WEBHOOK TOKENS
+-------------------------------------------------------------------------------
+https://tower2.thezengarden.net/api/v2/job_templates/10/gitlab/    - job_launch_test
+HqaER9o3nZ3Uwp1iNSQbEGXx9BB0HmqqmJ2M60RVE8nGHMEgLP
+
+
+https://tower2.thezengarden.net/api/v2/job_templates/11/gitlab/    - inmem_test
+HOiDakG06mXKMTVybMCITf23CFu2Hp06ZVgj3sbnFaDT7shhh3
+
+
+https://tower2.thezengarden.net/api/v2/job_templates/12/gitlab/    - file_creation_test
+Elv8XPQ1QGf4hcRcnFDF7yvV3iGe1Vbup0ASInVtyWpnZxA83m
+
+
+https://tower2.thezengarden.net/api/v2/job_templates/13/gitlab/    - file_removal_test
+Rdyn9S8Eccj4gmJgMxKngYMf5zouOH8OqIecQpEWWbzJpx980v
+
+
+-------------------------------------------------------------------------------
+CREDENTIALS
+-------------------------------------------------------------------------------
+Private Automation Hub - Community
+9674d157d148c894c96563c57308ef7f9717da29
+https://hub.thezengarden.net/api/galaxy/content/community/
+
+
+Private Automation Hub - RH Certified
+9674d157d148c894c96563c57308ef7f9717da29
+https://hub.thezengarden.net/api/galaxy/content/rh-certified/
+
+
+tower_tests_machine_cred
+Machine
+root
+
+tower_tests_tower_cred
+Red Hat Ansible Automation Platform
+https://tower2.thezengarden.net
+admin
+
+
+-------------------------------------------------------------------------------
+PROJECTS
+-------------------------------------------------------------------------------
+tower_tests
+Git
+https://github.com/theZ3Ngarden/tower-tests.git
+Clean/Delete
+
+
+
+-------------------------------------------------------------------------------
+INVENTORIES
+-------------------------------------------------------------------------------
+tower_tests_inv
+  tower_tests_inv_src
+  Sourced from a Project
+  tower_tests
+  inventory/hosts
+  Overwrite/Overwrite variables/Update on project update
+
+
+-------------------------------------------------------------------------------
+ORGANIZATIONS
+-------------------------------------------------------------------------------
+Red Hat Consulting
+  Ansible Galaxy
+  Private Automation Hub - Community
+  Private Automation Hub - RH Certified
+
+
+-------------------------------------------------------------------------------
+NOTIFICATIONS
+-------------------------------------------------------------------------------
+gitlab_commit
+Gitlab Project: tower-provision-status
+Webhook
+https://git.thezengarden.net/api/v4/projects/119/repository/commits
+HTTP Method: POST
+
+    HTTP Headers
+    ============
+    {
+      "Content-type": "application/json",
+      "PRIVATE-TOKEN": "glpat-CyjgoyCBexN-gYrhpg6-"
+    }
+
+
+    Success message body
+    ====================
+    {
+      "id": "119",
+      "branch": "main",
+      "commit_message": "Job {{ job.id }} - {{ job.name }} - completed in {{ job.elapsed }} seconds; Status: {{ job.status }}",
+        "author_name"   : "Ansible Deploy - Test",
+        "author_email"  : "naye.jokopuwo@thezengarden.net",
+      "actions": [{
+          "action": "create",
+          "file_path": "successful_jobs/{{ job.id }}_{{ job.name }}.txt",
+          "content": "{{ job.status }}\n"
+        }]
+    }
+
+
+    Error message body
+    ==================
+    {
+      "id": "119",
+      "branch": "main",
+      "commit_message": "Job {{ job.id }} - {{ job.name }} - completed in {{ job.elapsed }} seconds; Status: {{ job.status }}",
+        "author_name"   : "Ansible Deploy - Test",
+        "author_email"  : "naye.jokopuwo@thezengarden.net",
+      "actions": [{
+        "action": "create",
+        "file_path": "failed_jobs/{{ job.id }}_{{ job.name }}.txt",
+        "content": "{{ job.status }}\n"
+      }]
+    }
+
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+tower_test
+Webhook
+admin/redhat
+https://tower2.thezengarden.net/api/v2/job_templates/13/launch/
+HTTP Method: POST
+
+    HTTP Headers
+    ============
+    {
+      "Content-type": "application/json"
+    }
+
+
+    Success message body
+    ====================
+    {
+      "extra_vars": {
+        "tower_provision_host": "lab-dev-1",
+        "tower_provision_rc"  : "0",
+        "tower_provision_stdout" : "something or other",
+        "tower_provision_stderr" : "nah",
+        "tower_provision_msg"    : "wut?"
+      }
+    }
+
+
+    Error message body
+    ==================
+    {
+      "extra_vars": {
+        "tower_provision_host": "lab-dev-1",
+        "tower_provision_rc"  : "1",
+        "tower_provision_stdout" : "something or other",
+        "tower_provision_stderr" : "nah",
+        "tower_provision_msg"    : "wut?"
+      }
+    }

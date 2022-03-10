@@ -1,16 +1,24 @@
 ---
-- name: Create inventory based on passed extra_vars
+- name: Run a series of tasks, with exception handling, on a given host
   hosts: localhost
   gather_facts: no
   become: no
 
 
+  vars_files:
+    - vars/defaults.yml
+
   vars:
-    provision_host: "{{ tower_provision_host | default('localhost') }}"
+    lab_tower_hosts:
+      - lab-dev-1
+      - lab-dev-2
+      - lab-prod-1
+      - lab-prod-2
+    provision_host : "{{ tower_provision_host | default(lab_tower_hosts | random) }}"
 
 
   tasks:
-    - name     : "Create in-memory inventory for {{ provision_host }}"
+    - name     : "Create in-memory inventory to run against"
       add_host :
         name   : "{{ provision_host }}"
         groups :
@@ -59,7 +67,7 @@
 
 
         - name   : Return job data to originating source
-          no_log : no
+          no_log : yes
           uri    :
             url              : "{{ gitlab_commit_url }}"
             headers          :
