@@ -1,8 +1,8 @@
 ---
 - name: install and check python
   hosts: all
-  become: no
   gather_facts: yes
+  become: no
 
 
   vars:
