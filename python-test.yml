@@ -10,13 +10,8 @@
 
 
   tasks:
-    - name: Debug python interpreter
-      debug:
-        var: ansible_python_interpreter
-
-
     - name: Install python packages
-      package:
+      package :
         name  : "{{ item }}"
         state : present
       with_items:
@@ -26,21 +21,19 @@
         - install_pkgs|bool
 
 
-    - name: Check python version
-      command: "{{ ansible_python_interpreter }} --version"
-      register: r_python_version
-
-
-    - name: Show python 2 version
+    - name: Debug python interpreter
       debug:
-        var: r_python_version.stderr
-      when: r_python_version.stderr != ""
+        var: ansible_python_interpreter
 
 
-    - name: Show python 3 version
+    - name: Check Python version
       debug:
-        var: r_python_version.stdout
-      when: r_python_version.stdout != ""
+        var: ansible_python_version
+
+
+    - name: Check executable
+      debug:
+        var: ansible_python.executable
 
 
 ...
