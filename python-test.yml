@@ -2,7 +2,7 @@
 - name: install and check python
   hosts: all
   gather_facts: yes
-  become: no
+  become: yes
 
 
   vars:
@@ -10,6 +10,13 @@
 
 
   tasks:
+    - name: Set ansible_python_interpreter if not defined
+      set_fact:
+        ansible_python_interpreter: /usr/bin/python
+      when:
+        - ansible_python_interpreter is not defined
+
+
     - name: Install python packages
       package :
         name  : "{{ item }}"
@@ -34,6 +41,30 @@
     - name: Check executable
       debug:
         var: ansible_python.executable
+
+
+    - name: Deploy sample script
+      copy:
+        src   : files/pytest.py
+        dest  : /tmp/pytest.py
+        mode  : 0755
+
+
+    - name: Execute sample script
+      command  : "{{ ansible_python_interpreter }} /tmp/pytest.py"
+      register : r_sample_script
+
+
+    - name: Show r_sample_script
+      debug:
+        var: r_sample_script
+
+
+    - name: Cleanup sample script
+      file:
+        path  : /tmp/pytest.py
+        state : absent
+
 
 
 ...
