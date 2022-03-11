@@ -1,0 +1,46 @@
+---
+- name: install and check python
+  hosts: all
+  become: no
+  gather_facts: yes
+
+
+  vars:
+    install_pkgs: yes
+
+
+  tasks:
+    - name: Debug python interpreter
+      debug:
+        var: ansible_python_interpreter
+
+
+    - name: Install python packages
+      package:
+        name  : "{{ item }}"
+        state : present
+      with_items:
+        - python2
+        - python3
+      when:
+        - install_pkgs|bool
+
+
+    - name: Check python version
+      command: "{{ ansible_python_interpreter }} --version"
+      register: r_python_version
+
+
+    - name: Show python 2 version
+      debug:
+        var: r_python_version.stderr
+      when: r_python_version.stderr != ""
+
+
+    - name: Show python 3 version
+      debug:
+        var: r_python_version.stdout
+      when: r_python_version.stdout != ""
+
+
+...
