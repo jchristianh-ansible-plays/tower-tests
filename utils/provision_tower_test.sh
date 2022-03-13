@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CONC="100"
-REQU="500"
+CONC="50"
+REQU="100"
 
 BASE_URL="tower2.thezengarden.net"
 AAP_JOB_ID="11"
