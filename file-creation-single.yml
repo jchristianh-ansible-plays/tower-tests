@@ -5,8 +5,17 @@
   become: no
 
 
+  vars_files:
+    - vars/defaults.yml
+
+
   vars:
-    provision_host: "{{ tower_provision_host | default('localhost') }}"
+    lab_tower_hosts:
+      - lab-dev-1
+      - lab-dev-2
+      - lab-prod-1
+      - lab-prod-2
+    provision_host : "{{ tower_provision_host | default(lab_tower_hosts | random) }}"
 
 
   tasks:

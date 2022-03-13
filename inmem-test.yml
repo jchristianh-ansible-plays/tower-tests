@@ -8,6 +8,7 @@
   vars_files:
     - vars/defaults.yml
 
+
   vars:
     lab_tower_hosts:
       - lab-dev-1
