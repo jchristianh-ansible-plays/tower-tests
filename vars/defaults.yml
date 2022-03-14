@@ -2,6 +2,9 @@
 check_file: /tmp/hello-ansible.txt
 
 
+__no_log: yes
+
+
 tower_url                    : 'https://tower2.thezengarden.net'
 tower_user                   : admin
 tower_password               : redhat
@@ -15,7 +18,7 @@ tower_file_creation_url      : "{{ tower_url }}/api/v2/job_templates/\
 
 gitlab_url        : 'https://git.thezengarden.net'
 gitlab_proj_id    : 119
-gitlab_pat        : "glpat-PG-6dGDyTnt9guvxyhzS"
+gitlab_pat        : "glpat-Cg3ibBo6G39d_QZP9cHe"
 gitlab_commit_url : "{{ gitlab_url }}/api/v4/projects/{{ gitlab_proj_id }}\
                       /repository/commits"
 

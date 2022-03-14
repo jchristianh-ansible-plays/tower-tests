@@ -53,7 +53,7 @@
 
 
         - name   : "Test #2: Launch the `file_removal_test` job template"
-          no_log : yes
+          no_log : "{{ __no_log | default('yes') }}"
           uri    :
             url              : "{{ tower_file_remove_url }}"
             force_basic_auth : yes
@@ -68,7 +68,7 @@
 
 
         - name   : Return job data to originating source
-          no_log : yes
+          no_log : "{{ __no_log | default('yes') }}"
           uri    :
             url              : "{{ gitlab_commit_url }}"
             headers          :
@@ -111,9 +111,9 @@
             msg : "*** EXCEPTION CAUGHT; RUNNING RESCUE TASKS ***"
 
 
-        - name: "Create missing file on {{ inventory_hostname }}"
-          #no_log : yes
-          uri:
+        - name   : "Create missing file on {{ inventory_hostname }}"
+          no_log : "{{ __no_log | default('yes') }}"
+          uri    :
             url              : "{{ tower_file_creation_url }}"
             force_basic_auth : yes
             user             : "{{ tower_user }}"
@@ -126,9 +126,9 @@
                 tower_provision_host: "{{ inventory_hostname }}"
 
 
-        - name: Return job data to originating source
-          no_log : no
-          uri:
+        - name   : Return job data to originating source
+          no_log : "{{ __no_log | default('yes') }}"
+          uri    :
             url              : "{{ gitlab_commit_url }}"
             headers          :
               PRIVATE-TOKEN  : "{{ gitlab_pat }}"
