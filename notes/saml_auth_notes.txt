@@ -1,0 +1,85 @@
+SAML Service Provider Organization Info
+=======================================
+{
+  "en-US": {
+    "displayname": "The Zen Garden SSO",
+    "name": "TZGSSO",
+    "url": "https://sso.thezengarden.net"
+  }
+}
+
+
+SAML Service Provider Technical Contact
+SAML Service Provider Support Contact
+=======================================
+{
+  "emailAddress": "chris.hammer@redhat.com",
+  "givenName": "Chris Hammer"
+}
+
+
+SAML Enabled Identity Providers
+===============================
+{
+  "TZGSSO": {
+    "attr_groups": "http://schemas.xmlsoap.org/claims/Group",
+    "x509cert": "MIIFBDCCAuygAwIBAgIQCC1O5qRJT5elCDxSvDIJLzANBgkqhkiG9w0BAQsFADAdMRswGQYDVQQDDBJhdXRoZW50aWsgMjAyMi4zLjMwHhcNMjIwMzIxMjIxMDMwWhcNMjMwMzIyMjIxMDMwWjA5MQ0wCwYDVQQDDARnZW4xMRIwEAYDVQQKDAlhdXRoZW50aWsxFDASBgNVBAsMC1NlbGYtc2lnbmVkMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAtemfR4nnGxM9igtZg9S+3sAlhoWAPIkMEgqTp8IXTauCIBsVqEILeIbSymTwwd7uEUBUWTerQtUNiuCobywrrL3jan/PVQWN50VD3ItBl7pRtvvnP6iyPpNUCoBRBi8nTMoeCA/8QjFqYGiuBSkVriOyS3my+IVYNA6adLKs3Rz8SEzEf2w+zZUx7WY/zk2/5g2SYbLTXfYp3OBYbudI7JZbN6PSJwddWfZMaRiU4gvCoBOFW1Fo6BE19TEdVcjwohTbAC1PtAqWvfhFmDTT+dr2/DgMhPaj7Mywejr9pAqleRNTUljiC91kZb/q+G5JAywdyFTBdjDp39MfKFI3LD59NTBCdasEdZBB6pd/k5a4NoxjHJwQ26Ai4MPby4wzKGslkzlgNbce1fC4eqqUyguvhg+VAiYQkxIg682N6u4y/5cBkCSKY54CiXdPtE76Zbq1gD20T/amvy+pTXIU/E5F5JaTvwxfkV2rGNVVwMWHPDAwPLT3Xe8g++lDW+U3BuT7BVWUIgMeI3YAuoASfQLvFZJAu5wjAfTS1R/USKjthVTzJwDNnFqlE+9dqt1HZz2UtvioCddKlDTMT/1XehAZD7AtT3gH+J+8xgDd03A1HO7LUVwDysdj4ZPSKeFLUo3lS0Lu/rHiealNnHocZEdEIxDVqJcvepoCaVQQ1xUCAwEAAaMkMCIwIAYDVR0RAQH/BBYwFIISKi50aGV6ZW5nYXJkZW4ubmV0MA0GCSqGSIb3DQEBCwUAA4ICAQAOy5mD//NWutV9m73FGJfOIn2IcoF8jhpedvEALZrT0vIClW/ESVpyrp9hTmY6ZwUi+aRq5wzsiMnoXhKgf6phuAiHw4OQe0LPuRcmugiaNLjuUoI0AYc1thJpuDQqxkG0JcDb8uh/Q58+k/+tSoyRqk1WD4/CtgbGKE1sqR7/VsPUDRVADy17z5FLNnRgvpMO3A292qPyyCyG+kjU4VsTzjmxo3BIEAhwcf4czZACHGj71KMuGCxwz+AeQUStVPH23egAl37ze4pXlrvQB79mbmQjm0wLuoMrr8/6AeJKOOnzOJAUe3pcLkbZ2r+yfSq3umdX1B4u+QooEdYvj/KcO7413AeJwqSGYyt2eDbzJRQn8Vr4BXSUrB5VYeJap9MMRWSFuOcL/kHRphKBKEAXxTzVL3Y4dLH0XBd8uAVjhl57tzDloF9B9WDMBiGaC7LqaU1jQCjdeJjLJGPTk8wU5TozMuhJsbWu36Ca/YxQfuVHTTmM5mF+vZrOLoSAkpS2JD8fPMcdzIfcRf7iqb6lIsXcd0f2VlQs62hgexLxWKmAPPrtFknTOPVEAjt9+rF6y+g17NTwoxD2DKgPzJNH2xen9nonhbMBJqrIaMo/w62hyt+s2FDYWKWvdACk6xaUelwzYNw5+dqtuN6uw8Bu4a4V1jWR7Otm1Uqi4oN5VA==",
+    "attr_username": "http://schemas.goauthentik.io/2021/02/saml/username",
+    "attr_email": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+    "attr_user_permanent_id": "http://schemas.goauthentik.io/2021/02/saml/uid",
+    "entity_id": "https://tower2.thezengarden.net/sso/metadata/saml/",
+    "url": "https://sso.thezengarden.net/application/saml/aap/sso/binding/redirect/",
+    "attr_first_name": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+  }
+}
+
+
+SAML Organization Map
+=====================
+{
+  "Red Hat Consulting": {
+    "admins": [
+      "/^[^@].*?@redhat\\.com$/",
+      "chris@thezengarden.net"
+    ],
+    "users": false,
+    "remove_users": true,
+    "remove_admins": true
+  },
+  "Cloud": {
+    "admins": [
+      "/^[^@].*?@redhat\\.com$/",
+      "chris@thezengarden.net"
+    ],
+    "users": true,
+    "remove_users": false,
+    "remove_admins": true
+  }
+}
+
+
+SAML Team Attribute Mapping
+===========================
+{
+  "remove": false,
+  "saml_attr": "http://schemas.xmlsoap.org/claims/Group",
+  "team_org_map": [
+    {
+      "team": "aap_lab_users",
+      "team_alias": "Engineering",
+      "organization": "Cloud"
+    },
+    {
+      "team": "aap_lab_admins",
+      "team_alias": "Operations",
+      "organization": "Cloud"
+    }
+  ]
+}
+
+
+SAML Security Config
+====================
+{
+  "requestedAuthnContext": false
+}
