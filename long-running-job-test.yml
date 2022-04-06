@@ -6,14 +6,14 @@
 
 
   vars:
-    time_to_sleep: 30
+    time_to_sleep: 300
 
 
   tasks:
     - name: Simulate a long running job
-      command: "sleep {{ tower_time_to_sleep | default(time_to_sleep) | default(10) }}"
-      async: "{{ time_to_sleep + 10 }}"   # give +10s leeway
-      poll: 3
+      command : "sleep {{ time_to_sleep }}"
+      async   : "{{ time_to_sleep + 10 }}" # give +10s leeway
+      poll    : 3
 
 
 ...
