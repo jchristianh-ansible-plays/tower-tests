@@ -6,14 +6,16 @@
 
 
   vars:
-    time_to_sleep: 300
+    time_to_sleep : 300
+    run_cmd       : "find /"
+    poll_interval : 3
 
 
   tasks:
     - name: Simulate a long running job
-      command : "sleep {{ time_to_sleep }}"
+      command : "{{ run_cmd }}"
       async   : "{{ time_to_sleep + 10 }}" # give +10s leeway
-      poll    : 3
+      poll    : "{{ poll_interval }}"
 
 
 ...
