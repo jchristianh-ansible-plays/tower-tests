@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONC="5"
+CONC="50"
 REQU="50"
 
 BASE_URL="10.1.1.98"
