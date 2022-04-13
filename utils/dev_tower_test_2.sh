@@ -1,10 +1,10 @@
 #!/bin/bash
 
-CONC="5"
+CONC="50"
 REQU="50"
 
 BASE_URL="10.1.1.98"
-AAP_JOB_ID="10"
+AAP_JOB_ID="12"
 POST_PAYLOAD_PATH="empty.post"
 #POST_PAYLOAD_PATH="provision.post"
 POST_PAYLOAD_TYPE="application/json"

@@ -6,16 +6,19 @@
 
 
   vars:
-    time_to_sleep : 300
-    run_cmd       : "find /"
+    pause_time    : 60
+    num_retries   : 1440
     poll_interval : 3
+
+    check_commands:
+      - uname -a
+      - uptime
+      - ping -c 1 127.0.0.1
 
 
   tasks:
-    - name: Simulate a long running job
-      command : "{{ run_cmd }}"
-      async   : "{{ time_to_sleep + 10 }}" # give +10s leeway
-      poll    : "{{ poll_interval }}"
+  - name: Include long_running_tasks.yml
+    include_tasks: tasks/long_running_tasks.yml
 
 
 ...

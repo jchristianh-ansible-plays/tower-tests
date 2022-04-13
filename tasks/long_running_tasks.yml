@@ -1,0 +1,40 @@
+---
+- name: Run a series of test commands
+  command  : "{{ item }}"
+  until    : t_cmd.rc == 0
+  retries  : "{{ num_retries }}"
+  delay    : "{{ poll_interval }}"
+  loop     : "{{ check_commands }}"
+  register : t_cmd
+
+
+- name: Increment counter
+  set_fact:
+    rcount: "{{ 1 if rcount is undefined else rcount | int + 1 }}"
+
+
+- name: End condition met. Aborting...
+  fail:
+    msg: "Bye"
+  when: rcount|int >= num_retries
+
+
+- name: Current status
+  debug:
+    msg: "Currently on run {{ rcount }} of {{ num_retries }}."
+  run_once: yes
+
+
+- name: Pause for {{ pause_time }} seconds
+  pause:
+    seconds: "{{ pause_time }}"
+
+
+- name: Include ourself for recursion
+  include_tasks: tasks/long_running_tasks.yml
+
+
+
+
+
+...
