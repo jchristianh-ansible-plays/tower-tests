@@ -35,7 +35,6 @@
         file:
           path  : "{{ check_file }}"
           state : absent
-        ignore_errors: yes
 
 
 ...

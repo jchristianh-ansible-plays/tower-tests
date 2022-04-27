@@ -44,7 +44,6 @@
       copy:
         src  : files/hello-ansible.txt
         dest : "{{ check_file }}"
-      ignore_errors: yes
 
 
 ...
