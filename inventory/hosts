@@ -6,6 +6,10 @@ lab-dev-2
 ansible_python_interpreter=/usr/bin/python2
 
 
+[uat]
+lab-uat-1
+lab-uat-2
+
 [prod]
 lab-prod-1
 lab-prod-2
