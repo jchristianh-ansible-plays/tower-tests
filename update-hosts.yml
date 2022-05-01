@@ -1,0 +1,15 @@
+---
+- name: Update all hosts
+  hosts: all
+  gather_facts: no
+  become: yes
+
+
+  tasks:
+    - name: Update all hosts
+      package: name=* state=latest
+      async: 1800
+      poll : 3
+
+
+...
