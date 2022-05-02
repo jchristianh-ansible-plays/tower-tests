@@ -12,7 +12,7 @@
 
   tasks:
     - name: Launch job per each host
-      no_log : "{{ __no_log | default('yes') }}"
+      #no_log : "{{ __no_log | default('yes') }}"
       uri    :
         url              : "{{ tower_file_creation_url }}"
         force_basic_auth : yes
