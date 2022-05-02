@@ -1,0 +1,31 @@
+---
+- name: Split up hosts into single job runs
+  hosts: all
+  connection: local
+  become: yes
+  gather_facts: no
+
+
+  vars_files:
+    - vars/defaults.yml
+
+
+  tasks:
+    - name: Launch job per each host
+      no_log : "{{ __no_log | default('yes') }}"
+      uri    :
+        url              : "{{ tower_file_creation_url }}"
+        force_basic_auth : yes
+        user             : "{{ tower_user }}"
+        password         : "{{ tower_password }}"
+        body_format      : json
+        method           : POST
+        status_code      : 201
+        body:
+          extra_vars:
+            tower_provision_host: "{{ item }}"
+      loop: "{{ ansible_play_hosts }}"
+      run_once: yes
+
+
+...

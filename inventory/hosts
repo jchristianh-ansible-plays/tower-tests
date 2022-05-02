@@ -3,8 +3,8 @@ lab-dev-1
 lab-dev-2
 lab-dev-3
 
-[dev:vars]
-ansible_python_interpreter=/usr/bin/python2
+#[dev:vars]
+#ansible_python_interpreter=/usr/bin/python2
 
 
 [test]
@@ -12,8 +12,8 @@ lab-test-1
 lab-test-2
 lab-test-3
 
-[test:vars]
-ansible_python_interpreter=/usr/bin/python3
+#[test:vars]
+#ansible_python_interpreter=/usr/bin/python3
 
 
 [prod]
@@ -21,8 +21,8 @@ lab-prod-1
 lab-prod-2
 lab-prod-3
 
-[prod:vars]
-ansible_python_interpreter=/usr/bin/python3
+#[prod:vars]
+#ansible_python_interpreter=/usr/bin/python3
 
 
 [all:vars]
