@@ -10,12 +10,7 @@
 
 
   vars:
-    lab_tower_hosts:
-      - lab-dev-1
-      - lab-dev-2
-      - lab-prod-1
-      - lab-prod-2
-    provision_host : "{{ tower_provision_host | default(lab_tower_hosts | random) }}"
+    provision_host: "{{ tower_provision_host | default(ansible_play_hosts | random) }}"
 
 
   tasks:

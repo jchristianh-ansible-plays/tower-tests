@@ -6,7 +6,7 @@
 
 
   vars:
-    provision_host: "{{ tower_provision_host | default('localhost') }}"
+    provision_host: "{{ tower_provision_host | default(ansible_play_hosts | random) }}"
 
 
   tasks:
