@@ -5,6 +5,10 @@
   become: no
 
 
+  vars_files:
+    - vars/defaults.yml
+
+
   vars:
     provision_host: "{{ tower_provision_host | default(ansible_play_hosts | random) }}"
 
@@ -31,10 +35,10 @@
 
 
   tasks:
-      - name: "Remove file from {{ inventory_hostname }}"
-        file:
-          path  : "{{ check_file }}"
-          state : absent
+    - name: "Remove file from {{ inventory_hostname }}"
+      file:
+        path  : "{{ check_file }}"
+        state : absent
 
 
 ...
