@@ -1,6 +1,6 @@
 ---
 - name: Create inventory based on passed extra_vars
-  hosts: localhost
+  hosts: all
   gather_facts: no
   become: no
 
@@ -19,6 +19,7 @@
         name: "{{ provision_host }}"
         groups:
           - remdiation
+      delegate_to: localhost
 
 
 # =========================================================================== #
