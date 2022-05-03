@@ -1,8 +1,7 @@
 ---
 - name: Split up hosts into single job runs
   hosts: all
-  connection: local
-  become: yes
+  become: no
   gather_facts: no
 
 
