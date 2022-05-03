@@ -1,6 +1,6 @@
 ---
 - name: Run a series of tasks, with exception handling, on a given host
-  hosts: localhost
+  hosts: all
   gather_facts: no
   become: no
 
@@ -19,6 +19,7 @@
         name   : "{{ provision_host }}"
         groups :
           - remdiation
+      delegate_to: localhost
 
 
 # =========================================================================== #
