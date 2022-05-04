@@ -1,5 +1,5 @@
 ---
-- name: Create a test file on current inventory
+- name: Create inventory based on extra_vars
   hosts: all
   gather_facts: no
   become: no
@@ -10,28 +10,37 @@
 
 
   vars:
-    # These vars are used to purposefully skip a node
-    skip_host    : "{{ tower_skip_host    | default('no') }}"
-    host_to_skip : "{{ tower_host_to_skip | default('lab-dev-2') }}"
+    provision_host: "{{ tower_provision_host | default(ansible_play_hosts | join(',')) }}"
 
 
   tasks:
-    - block:
-      - name: "Test #1a - Copy file to machine - skipping {{ host_to_skip }}"
-        copy:
-          src  : files/hello-ansible.txt
-          dest : "{{ check_file }}"
-        when: inventory_hostname != host_to_skip
-      when:
-        - skip_host | bool
+    - name: "Create in-memory inventory"
+      add_host:
+        name: "{{ item }}"
+        groups:
+          - remdiation
+      delegate_to: localhost
+      loop: "{{ provision_host.split(',') }}"
 
 
+# =========================================================================== #
+
+
+- name: Create a test file on remediation group
+  hosts: remdiation
+  gather_facts: no
+  become: no
+
+
+  vars_files:
+    - vars/defaults.yml
+
+
+  tasks:
     - name: "Test #1 - Copy file to machine"
       copy:
         src  : files/hello-ansible.txt
         dest : "{{ check_file }}"
-      when:
-        - not skip_host | bool
 
 
 ...

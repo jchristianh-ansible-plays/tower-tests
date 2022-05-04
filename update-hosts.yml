@@ -1,12 +1,39 @@
 ---
-- name: Update all hosts
+- name: Create inventory based on extra_vars
   hosts: all
+  gather_facts: no
+  become: no
+
+
+  vars_files:
+    - vars/defaults.yml
+
+
+  vars:
+    provision_host: "{{ tower_provision_host | default(ansible_play_hosts | join(',')) }}"
+
+
+  tasks:
+    - name: "Create in-memory inventory"
+      add_host:
+        name: "{{ item }}"
+        groups:
+          - remdiation
+      delegate_to: localhost
+      loop: "{{ provision_host.split(',') }}"
+
+
+# =========================================================================== #
+
+
+- name: Update remdiation hosts
+  hosts: remdiation
   gather_facts: no
   become: yes
 
 
   tasks:
-    - name: Update all hosts
+    - name: Update host packages to latest releases
       package: name=* state=latest
       async: 1800
       poll : 3

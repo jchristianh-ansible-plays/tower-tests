@@ -1,6 +1,33 @@
 ---
-- name: Verify file existance and handle errors if needed
+- name: Create inventory based on extra_vars
   hosts: all
+  gather_facts: no
+  become: no
+
+
+  vars_files:
+    - vars/defaults.yml
+
+
+  vars:
+    provision_host: "{{ tower_provision_host | default(ansible_play_hosts | join(',')) }}"
+
+
+  tasks:
+    - name: "Create in-memory inventory"
+      add_host:
+        name: "{{ item }}"
+        groups:
+          - remdiation
+      delegate_to: localhost
+      loop: "{{ provision_host.split(',') }}"
+
+
+# =========================================================================== #
+
+
+- name: Verify file existance and handle errors if needed
+  hosts: remdiation
   gather_facts: no
   become: no
 
@@ -19,20 +46,25 @@
         register     : r_check_file
 
 
-    rescue:
-      - name: Exception caught
+      - name: "Test #2: Say Hello"
         debug:
-          msg:
-            - "host   : {{ inventory_hostname }}"
-            - "rc     : {{ r_check_file.rc }}"
-            - "stdout : {{ r_check_file.stdout }}"
-            - "stderr : {{ r_check_file.stderr }}"
+          var: r_check_file.stdout
 
 
-    always:
-      - name: Job complete
-        debug:
-          msg: "Job has completed."
+#    rescue:
+#      - name: Exception caught
+#        debug:
+#          msg:
+#            - "host   : {{ inventory_hostname }}"
+#            - "rc     : {{ r_check_file.rc }}"
+#            - "stdout : {{ r_check_file.stdout }}"
+#            - "stderr : {{ r_check_file.stderr }}"
+#
+#
+#    always:
+#      - name: Job complete
+#        debug:
+#          msg: "Job has completed."
 
 
 ...

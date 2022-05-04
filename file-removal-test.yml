@@ -1,5 +1,5 @@
 ---
-- name: Create inventory based on passed extra_vars
+- name: Create inventory based on extra_vars
   hosts: all
   gather_facts: no
   become: no
@@ -10,16 +10,17 @@
 
 
   vars:
-    provision_host: "{{ tower_provision_host | default(ansible_play_hosts | random) }}"
+    provision_host: "{{ tower_provision_host | default(ansible_play_hosts | join(',')) }}"
 
 
   tasks:
-    - name: "Create in-memory inventory for {{ provision_host }}"
+    - name: "Create in-memory inventory"
       add_host:
-        name: "{{ provision_host }}"
+        name: "{{ item }}"
         groups:
           - remdiation
       delegate_to: localhost
+      loop: "{{ provision_host.split(',') }}"
 
 
 # =========================================================================== #
