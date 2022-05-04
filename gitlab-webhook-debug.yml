@@ -9,11 +9,11 @@
     - name: Debug Gitlab Webhook
       debug:
         msg:
-          - "{{ __message | default('Not defined', True) }}"
-          - "{{ tower_webhook_payload.event_name | default('Not defined', True) }}"
-          - "{{ tower_webhook_payload.checkout_sha | default('Not defined', True) }}"
-          - "{{ tower_webhook_payload.commits.message | default('Not defined', True) }}"
-          - "{{ tower_webhook_payload.commits.added | default('Not defined', True) }}"
+          - "{{ __message                              | default('Not defined', True) }}"
+          - "{{ tower_webhook_payload.event_name       | default('Not defined', True) }}"
+          - "{{ tower_webhook_payload.checkout_sha     | default('Not defined', True) }}"
+          - "{{ tower_webhook_payload.commits.message  | default('Not defined', True) }}"
+          - "{{ tower_webhook_payload.commits.added    | default('Not defined', True) }}"
           - "{{ tower_webhook_payload.commits.modified | default('Not defined', True) }}"
 
 
