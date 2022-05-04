@@ -39,7 +39,7 @@
   tasks:
     - name   : Log fail to Gitlab
       delegate_to: localhost
-      no_log : "{{ __no_log | default('yes') }}"
+      #no_log : "{{ __no_log | default('yes') }}"
       uri    :
         url              : "{{ gitlab_commit_url }}"
         headers          :
