@@ -49,10 +49,15 @@
           - induce_failure
 
 
-    rescue:
-      - name: Exception caught!
+      - name: Tasks complete
         debug:
-          msg: "Fail condition for {{ inventory_hostname }}!"
+          msg: "All tasks have completed."
+
+
+#    rescue:
+#      - name: Exception caught!
+#        debug:
+#          msg: "Fail condition for {{ inventory_hostname }}!"
 
 
     always:
