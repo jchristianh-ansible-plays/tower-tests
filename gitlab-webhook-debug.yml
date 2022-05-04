@@ -10,11 +10,11 @@
       debug:
         msg:
           - "{{ __message                              | default('Not defined', True) }}"
-          - "{{ tower_webhook_payload.event_name       | default('Not defined', True) }}"
-          - "{{ tower_webhook_payload.checkout_sha     | default('Not defined', True) }}"
-          - "{{ tower_webhook_payload.commits.message  | default('Not defined', True) }}"
-          - "{{ tower_webhook_payload.commits.added    | default('Not defined', True) }}"
-          - "{{ tower_webhook_payload.commits.modified | default('Not defined', True) }}"
+          - "{{ tower_webhook_payload.[0]event_name       | default('Not defined', True) }}"
+          - "{{ tower_webhook_payload.[0]checkout_sha     | default('Not defined', True) }}"
+          - "{{ tower_webhook_payload.[0]commits.message  | default('Not defined', True) }}"
+          - "{{ tower_webhook_payload.[0]commits.added    | default('Not defined', True) }}"
+          - "{{ tower_webhook_payload.[0]commits.modified | default('Not defined', True) }}"
 
 
 ...
