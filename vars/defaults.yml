@@ -8,12 +8,17 @@ __no_log: yes
 tower_url                    : 'https://tower2.thezengarden.net'
 tower_user                   : admin
 tower_password               : redhat
-tower_file_removal_template  : 13
-tower_file_creation_template : 20
+
+tower_file_removal_template         : 13
+tower_file_creation_template        : 20
+tower_remediation_workflow_template : 29
+
 tower_file_remove_url        : "{{ tower_url }}/api/v2/job_templates/\
                                 {{ tower_file_removal_template }}/launch/"
 tower_file_creation_url      : "{{ tower_url }}/api/v2/job_templates/\
                                 {{ tower_file_creation_template }}/launch/"
+tower_remdiation_workflow    : "{{ tower_url}}/api/v2/workflow_job_templates/\
+                                {{ tower_remediation_workflow_template }}/launch/"
 
 
 gitlab_url        : 'https://git.thezengarden.net'
