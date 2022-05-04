@@ -16,8 +16,8 @@
   tasks:
     - name: Set provision_host to Gitlab commit files if defined
       set_fact:
-        provision_host: "{{ tower_webhook_payload.commits[0].added    | split('/') | last | default([]) +
-                            tower_webhook_payload.commits[0].modified | split('/') | last | default([]) }}"
+        provision_host: "{{ tower_webhook_payload.commits[0].added    | split('/') | last +
+                            tower_webhook_payload.commits[0].modified | split('/') | last }}"
       when:
         - tower_webhook_payload.commits[0].added    is defined or
           tower_webhook_payload.commits[0].modified is defined
