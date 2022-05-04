@@ -1,0 +1,17 @@
+---
+- name: Run a series of tasks, with exception handling, on a given host
+  hosts: localhost
+  gather_facts: no
+  become: no
+
+
+  tasks:
+    - name: Debug Gitlab Webhook
+      debug:
+        msg:
+          - "{{ tower_webhook_payload.commits.message | default('Not defined', True) }}"
+          - "{{ tower_webhook_payload.commits.added | default('Not defined', True) }}"
+          - "{{ tower_webhook_payload.commits.modified | default('Not defined', True) }}"
+
+
+...
