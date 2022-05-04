@@ -1,0 +1,69 @@
+---
+- name: Create inventory based on extra_vars
+  hosts: all
+  gather_facts: no
+  become: no
+
+
+  vars_files:
+    - vars/defaults.yml
+
+
+  vars:
+    provision_host: "{{ tower_provision_host | default(ansible_play_hosts | join(',')) }}"
+
+
+  tasks:
+    - name: "Create in-memory inventory"
+      add_host:
+        name: "{{ item }}"
+        groups:
+          - remdiation
+      delegate_to: localhost
+      loop: "{{ provision_host.split(',') }}"
+
+
+# =========================================================================== #
+
+
+- name: Post Ansible Job Status to Gitlab
+  hosts: remdiation
+  gather_facts: yes
+  become: no
+
+
+  vars_files:
+    - vars/defaults.yml
+
+
+  tasks:
+    - name   : Log success to Gitlab
+      delegate_to: localhost
+      #no_log : "{{ __no_log | default('yes') }}"
+      uri    :
+        url              : "{{ gitlab_commit_url }}"
+        headers          :
+          PRIVATE-TOKEN  : "{{ gitlab_pat }}"
+        method           : POST
+        status_code      : 201
+        body_format      : json
+        return_content   : no
+        validate_certs   : no
+        body:
+          id             : "{{ gitlab_proj_id }}"
+          branch         : "{{ git_commit_branch }}"
+          commit_message : "Job {{ lookup('env', 'JOB_ID') | default('N/A', true) }} - {{ inventory_hostname }}; SUCCESS"
+          author_name    : "{{ git_commit_author }}"
+          author_email   : "{{ git_commit_email }}"
+          actions:
+          - action    : create
+            file_path : "successful_jobs/{{ lookup('env', 'JOB_ID') | default('', true) }}_\
+                          {{ inventory_hostname }}_\
+                          {{ ansible_date_time.iso8601 }}.txt"
+            content   : |
+              tower_provision_host   : {{ inventory_hostname }}
+              tower_job_id           : {{ lookup('env', 'JOB_ID')           | default('N/A', true) }}
+              tower_project_revision : {{ lookup('env', 'PROJECT_REVISION') | default('N/A', true) }}
+
+
+...

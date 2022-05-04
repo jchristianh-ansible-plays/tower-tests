@@ -23,7 +23,7 @@ tower_remdiation_workflow    : "{{ tower_url}}/api/v2/workflow_job_templates/\
 
 gitlab_url        : 'https://git.thezengarden.net'
 gitlab_proj_id    : 119
-gitlab_pat        : "glpat-Cg3ibBo6G39d_QZP9cHe"
+gitlab_pat        : "glpat-vvig36j1DG6jv6h9CHdk"
 gitlab_commit_url : "{{ gitlab_url }}/api/v4/projects/{{ gitlab_proj_id }}\
                       /repository/commits"
 
