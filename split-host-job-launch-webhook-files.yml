@@ -1,0 +1,66 @@
+---
+- name: Create inventory based on extra_vars
+  hosts: all
+  gather_facts: no
+  become: no
+
+
+  vars_files:
+    - vars/defaults.yml
+
+
+  vars:
+    provision_host: "{{ tower_provision_host | default(ansible_play_hosts | join(',')) }}"
+
+
+  tasks:
+    - name: Set provision_host to Gitlab commit files if defined
+      set_fact:
+        provision_host: "{{ tower_webhook_payload.commits[0].added    | split('/') | last | default([]) +
+                            tower_webhook_payload.commits[0].modified | split('/') | last | default([]) }}"
+      when:
+        - tower_webhook_payload.commits[0].added    is defined or
+          tower_webhook_payload.commits[0].modified is defined
+
+
+    - name: "Create in-memory inventory"
+      add_host:
+        name: "{{ item }}"
+        groups:
+          - remdiation
+      delegate_to: localhost
+      loop: "{{ provision_host.split(',') }}"
+
+
+# =========================================================================== #
+
+
+- name: Split up hosts into single job runs
+  hosts: remdiation
+  become: no
+  gather_facts: no
+
+
+  vars_files:
+    - vars/defaults.yml
+
+
+  tasks:
+    - name: Launch job per each host
+      no_log : "{{ __no_log | default('yes') }}"
+      uri    :
+        url              : "{{ tower_remdiation_workflow }}"
+        force_basic_auth : yes
+        user             : "{{ tower_user }}"
+        password         : "{{ tower_password }}"
+        body_format      : json
+        method           : POST
+        status_code      : 201
+        body:
+          extra_vars:
+            tower_provision_host: "{{ item }}"
+      loop: "{{ ansible_play_hosts }}"
+      run_once: yes
+
+
+...
