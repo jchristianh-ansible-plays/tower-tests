@@ -1,0 +1,17 @@
+---
+- name: For Testing Ideas
+  hosts: all
+  connection: local
+  gather_facts: no
+  become: no
+
+
+  vars_files:
+    - vars/defaults.yml
+
+
+  tasks:
+
+
+
+...

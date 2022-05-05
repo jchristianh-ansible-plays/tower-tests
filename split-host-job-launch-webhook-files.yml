@@ -12,34 +12,40 @@
   tasks:
     - name: Provision hosts defined via tower_provision_host or defaults
       block:
-      - name: Set provision_host to tower_provision_host or default
-        set_fact:
-          provision_host: "{{ tower_provision_host | default(ansible_play_hosts | join(',')) }}"
+        - name: Set provision_host to tower_provision_host or default
+          set_fact:
+            provision_host: "{{ tower_provision_host | default(ansible_play_hosts | join(',')) }}"
 
-      - name: "Create in-memory inventory for tower_provision_host"
-        add_host:
-          name: "{{ item }}"
-          groups:
-            - remdiation
-        delegate_to: localhost
-        loop: "{{ provision_host.split(',') }}"
+        - name: "Create in-memory inventory for tower_provision_host"
+          add_host:
+            name   : "{{ item }}"
+            groups :
+              - remdiation
+          delegate_to : localhost
+          loop        : "{{ provision_host.split(',') }}"
       when: tower_webhook_payload is not defined
+
+
+    - name: Check tower_webhook_payload
+      debug:
+        var: tower_webhook_payload
 
 
     - name: Provision hosts defined via tower_webhook_payload
       block:
-      - name: Set provision_host to Webhook files
-        set_fact:
-          provision_host: "{{ [item | split('/') | last] + provision_host | default([]) }}"
-        loop: "{{ tower_webhook_payload.commits[0].added + tower_webhook_payload.commits[0].modified }}"
+        - name: Set provision_host to Webhook files
+          set_fact:
+            provision_host: "{{ [item | split('/') | last] + provision_host | default([]) }}"
+          loop: "{{ tower_webhook_payload.commits[0].added + tower_webhook_payload.commits[0].modified }}"
 
-      - name: "Create in-memory inventory for Webhook"
-        add_host:
-          name: "{{ item }}"
-          groups:
-            - remdiation
-        delegate_to: localhost
-        loop: "{{ provision_host }}"
+        - name: "Create in-memory inventory for Webhook"
+          add_host:
+            name   : "{{ item }}"
+            groups :
+              - remdiation
+          delegate_to   : localhost
+          ignore_errors : yes
+          loop          : "{{ provision_host }}"
       when: tower_webhook_payload is defined
 
 
