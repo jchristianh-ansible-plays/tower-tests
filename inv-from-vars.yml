@@ -26,12 +26,6 @@
 
 
   tasks:
-    - name: debug1
-      debug:
-        msg: "{{ item.hostname }} -> {{ item.ip }} -> {{ host_inventory }} -> {{ host_state }}"
-      loop: "{{ hosts }}"
-
-
     - name: Add tower host
       tower_host:
         name:              "{{ tower_hosts_item.hostname | mandatory }}"
