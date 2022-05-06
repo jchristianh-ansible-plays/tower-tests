@@ -1,12 +1,12 @@
 ---
-- name: Tests machine connections via Ansible Tower/Ansible Automation Platform
+- name: Test machine connections
   hosts: all
   gather_facts: no
   become: no
 
 
   vars:
-    # These vars are used to purposefully fail a node
+    # These vars are used to purposefully fail a node for testing
     fail_host    : "{{ tower_fail_host    | default('no') }}"
     host_to_fail : "{{ tower_host_to_fail | default('lab-prod-1') }}"
 

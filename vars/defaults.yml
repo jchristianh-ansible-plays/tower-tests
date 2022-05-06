@@ -8,6 +8,7 @@ __no_log: yes
 tower_url                    : 'https://tower2.thezengarden.net'
 tower_user                   : admin
 tower_password               : redhat
+tower_org                    : Red Hat Consulting
 
 tower_file_removal_template         : 13
 tower_file_creation_template        : 20

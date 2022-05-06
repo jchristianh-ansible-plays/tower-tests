@@ -1,5 +1,5 @@
 ---
-- name: Update inventory based on extra_vars
+- name: Inventory based on extra_vars
   hosts: localhost
   connection: local
   gather_facts: no
@@ -11,8 +11,8 @@
 
 
   vars:
-    __host_inventory: container_inventory
-    __host_state    : present
+    __host_inventory : container_inventory
+    __host_state     : present
 
     __hosts:
       - hostname : lab-dev-1
