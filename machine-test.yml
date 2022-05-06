@@ -7,7 +7,7 @@
 
   vars:
     # These vars are used to purposefully fail a node
-    fail_host    : "{{ tower_fail_host    | default('yes') }}"
+    fail_host    : "{{ tower_fail_host    | default('no') }}"
     host_to_fail : "{{ tower_host_to_fail | default('lab-prod-1') }}"
 
 
