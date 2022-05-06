@@ -24,15 +24,6 @@
       - hostname : lab-dev-3
         ip       : 10.10.42.42
 
-      - hostname : lab-test-1
-        ip       : 10.10.42.50
-
-      - hostname : lab-test-2
-        ip       : 10.10.42.51
-
-      - hostname : lab-test-3
-        ip       : 10.10.42.52
-
 
   tasks:
     - name: Add tower host
