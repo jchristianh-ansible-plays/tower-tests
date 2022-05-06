@@ -1,5 +1,5 @@
 ---
-- name: Create inventory based on extra_vars
+- name: Update inventory based on extra_vars
   hosts: localhost
   connection: local
   gather_facts: no
