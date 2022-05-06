@@ -11,10 +11,10 @@
 
 
   vars:
-    host_inventory: container_inventory
-    host_state    : present
+    __host_inventory: container_inventory
+    __host_state    : present
 
-    hosts:
+    __hosts:
       - hostname : lab-dev-1
         ip       : 10.10.42.40
 
@@ -29,8 +29,8 @@
     - name: Add tower host
       tower_host:
         name:              "{{ tower_hosts_item.hostname | mandatory }}"
-        inventory:         "{{ host_inventory | mandatory }}"
-        state:             "{{ host_state | default('present') }}"
+        inventory:         "{{ __host_inventory | mandatory }}"
+        state:             "{{ __host_state | default('present') }}"
         variables:
           ansible_host:    "{{ tower_hosts_item.ip }}"
         tower_host:        "{{ tower_hostname | default(omit, true) }}"
@@ -39,7 +39,7 @@
         tower_oauthtoken:  "{{ tower_oauthtoken | default(omit, true) }}"
         tower_config_file: "{{ tower_config_file | default(omit, true) }}"
         validate_certs:    "{{ tower_validate_certs | default(omit) }}"
-      loop: "{{ hosts }}"
+      loop: "{{ __hosts }}"
       loop_control:
         loop_var: tower_hosts_item
 
