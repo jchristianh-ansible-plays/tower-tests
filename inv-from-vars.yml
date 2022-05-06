@@ -1,0 +1,53 @@
+---
+- name: Create inventory based on Webook commit
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+
+
+  vars_files:
+    - vars/defaults.yml
+
+
+  vars:
+    host_inventory: container_inventory
+    host_state    : present
+
+    hosts:
+      - hostname : lab-dev-1
+        ip       : 10.10.42.40
+
+      - hostname : lab-dev-2
+        ip       : 10.10.42.41
+
+      - hostname : lab-dev-3
+        ip       : 10.10.42.42
+
+
+  tasks:
+    - name: debug1
+      debug:
+        msg: "{{ item.hostname }} -> {{ item.ip }} -> {{ host_inventory }} -> {{ host_state }}"
+      loop: "{{ hosts }}"
+
+
+    - name: Add tower host
+      tower_host:
+        name:              "{{ tower_hosts_item.hostname | mandatory }}"
+        inventory:         "{{ host_inventory | mandatory }}"
+        state:             "{{ host_state | default('present') }}"
+        variables:
+          ansible_host:    "{{ tower_hosts_item.ip }}"
+        tower_host:        "{{ tower_hostname | default(omit, true) }}"
+        tower_username:    "{{ tower_username | default(omit, true) }}"
+        tower_password:    "{{ tower_password | default(omit, true) }}"
+        tower_oauthtoken:  "{{ tower_oauthtoken | default(omit, true) }}"
+        tower_config_file: "{{ tower_config_file | default(omit, true) }}"
+        validate_certs:    "{{ tower_validate_certs | default(omit) }}"
+      loop: "{{ hosts }}"
+      loop_control:
+        loop_var: tower_hosts_item
+
+
+...

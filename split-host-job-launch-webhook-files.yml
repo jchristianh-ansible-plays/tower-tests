@@ -26,11 +26,6 @@
       when: tower_webhook_payload is not defined
 
 
-    - name: Check tower_webhook_payload
-      debug:
-        var: tower_webhook_payload
-
-
     - name: Provision hosts defined via tower_webhook_payload
       block:
         - name: Set provision_host to Webhook files
