@@ -1,0 +1,28 @@
+---
+  __hosts:
+    - hostname : lab-dev-1
+      ip       : 10.10.42.40
+
+    - hostname : lab-dev-2
+      ip       : 10.10.42.41
+
+    - hostname : lab-dev-3
+      ip       : 10.10.42.42
+
+    - hostname : lab-test-1
+      ip       : 10.10.42.50
+
+    - hostname : lab-test-2
+      ip       : 10.10.42.51
+
+    - hostname : lab-test-3
+      ip       : 10.10.42.52
+
+    - hostname : lab-prod-1
+      ip       : 10.10.42.60
+
+    - hostname : lab-prod-2
+      ip       : 10.10.42.61
+
+    - hostname : lab-prod-3
+      ip       : 10.10.42.62
