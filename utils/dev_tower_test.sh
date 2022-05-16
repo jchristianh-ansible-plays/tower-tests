@@ -1,12 +1,13 @@
 #!/bin/bash
 
-CONC="50"
-REQU="50"
+CONC="100"
+REQU="100"
 
 BASE_URL="10.1.1.98"
-AAP_JOB_ID="10"
-POST_PAYLOAD_PATH="empty.post"
-#POST_PAYLOAD_PATH="provision.post"
+AAP_JOB_ID="22"
+LAUNCH_URL="workflow_job_templates/${AAP_JOB_ID}/launch/"
+#POST_PAYLOAD_PATH="empty.post"
+POST_PAYLOAD_PATH="message.post"
 POST_PAYLOAD_TYPE="application/json"
 
 TOWER_USER="admin"
@@ -20,5 +21,5 @@ printf "\n%s\n" \
   -A ${TOWER_USER}:${TOWER_PASS} \
   -T "${POST_PAYLOAD_TYPE}" \
   -v1 \
-  -p ${POST_PAYLOAD_PATH} "https://${BASE_URL}/api/v2/job_templates/${AAP_JOB_ID}/launch/" | \
+  -p ${POST_PAYLOAD_PATH} "https://${BASE_URL}/api/v2/${LAUNCH_URL}" | \
   grep "Failed requests\|Time taken for tests"
