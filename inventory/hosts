@@ -25,28 +25,5 @@ lab-prod-3
 #ansible_python_interpreter=/usr/bin/python3
 
 
-[dynamic]
-lab-dynamic-1
-lab-dynamic-2
-lab-dynamic-3
-lab-dynamic-4
-lab-dynamic-5
-lab-dynamic-6
-lab-dynamic-7
-lab-dynamic-8
-lab-dynamic-9
-lab-dynamic-10
-lab-dynamic-11
-lab-dynamic-12
-lab-dynamic-13
-lab-dynamic-14
-lab-dynamic-15
-lab-dynamic-16
-lab-dynamic-17
-lab-dynamic-18
-lab-dynamic-19
-lab-dynamic-20
-
-
 [all:vars]
 ansible_user=root
